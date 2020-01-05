@@ -3,7 +3,7 @@
 ## Goal
 Recreate a game which should continue gameplay like the Mount&Blade: Warband "Persistent World" mod.  
 At it's core there is not really much to the gameplay itself, it's just a sandbox-like map which is populated by players that do what they please. Gameplay is open and not restrictive.  
-It's medieval themed, armor and weapons, resource gathering and crafting revolves around this concept, of course combat as well.  
+It's medieval themed, armor and weapons, resource gathering and crafting revolves around this concept, of course combat as well. World interactions is "skill/action"-based, which to my understanding is "you do an action and the world directly response to that". If you mine rock, you have to actively hit the rock to get something out of it. No enraging "waiting" or "countdowns" until a resource is mined ready.  
 The "World" is not some fancy open world mmorpg stuff but meerely just a simple "map". Each server can have a map that is currently played on. The map consists of difference castles and villages that can be occupied by factions made of players. There is full deplomacy between these factions, like war to capture the village of another faction or maybe join together to fight the biggest faction on the map.  
 This is only multiplayer, no npcs. Everyone can host servers, the software will also be available open source. The principle is a drop-in/drop-out multiplayer. You join the current map whenever you please and just start playing. No lobbying or coop-wating.
 
