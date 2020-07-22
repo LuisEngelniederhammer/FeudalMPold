@@ -16,12 +16,25 @@ onready var head = $WeaponPoint;
 onready var character = $dummy_character;
 onready var characterAnimationPlayer = $dummy_character/AnimationPlayer;
 
+var escActive = false;
+var escMenu;
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _unhandled_input(event):
 	if(event.is_action_pressed("ui_cancel")):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
+		if(!escActive):
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
+			escMenu = SceneService.attachUI("EscapeMenu/EscapeMenu.tscn");
+			print(escMenu)
+			escMenu.show();
+			escActive = true;
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED);
+			escMenu.hide();
+			escMenu.queue_free();
+			escActive = false;
 	
 	if (event is InputEventMouseMotion):
 		rotate_y(deg2rad(-event.relative.x * mouseSensitivity));
