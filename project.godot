@@ -16,8 +16,13 @@ _global_script_class_icons={
 [application]
 
 config/name="FeudalMP"
-run/main_scene="res://test/WaterShaderTest.tscn"
+run/main_scene="res://assets/ui/MainMenu.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+GlobalConstants="*res://src/common/GlobalConstants.gd"
+SceneService="*res://src/common/SceneService.gd"
 
 [input]
 

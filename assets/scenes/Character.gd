@@ -13,6 +13,8 @@ var velocity:Vector3 = Vector3();
 
 onready var pivot = $Pivot;
 onready var head = $WeaponPoint;
+onready var character = $dummy_character;
+onready var characterAnimationPlayer = $dummy_character/AnimationPlayer;
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -34,6 +36,8 @@ func _physics_process(delta):
 
 	if(Input.is_action_pressed("move_forward")):
 		direction -= transform.basis.z;
+		if(!characterAnimationPlayer.is_playing()):
+			characterAnimationPlayer.play("Run");
 	if(Input.is_action_pressed("move_backward")):
 		direction += transform.basis.z;
 	if(Input.is_action_pressed("move_left")):
