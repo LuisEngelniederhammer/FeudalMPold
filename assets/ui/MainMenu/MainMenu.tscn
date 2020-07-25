@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/ui/MainMenu/Button.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/MainMenu/Create Server.gd" type="Script" id=2]
+[ext_resource path="res://assets/ui/MainMenu/Connect.gd" type="Script" id=3]
+[ext_resource path="res://assets/ui/MainMenu/Exit.gd" type="Script" id=4]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -19,9 +22,9 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 278.0
+margin_top = 254.0
 margin_right = 1024.0
-margin_bottom = 298.0
+margin_bottom = 274.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
@@ -37,14 +40,44 @@ __meta__ = {
 }
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 278.0
+margin_right = 1024.0
+margin_bottom = 298.0
+alignment = 1
+
+[node name="Create Server" type="Button" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 463.0
+margin_right = 560.0
+margin_bottom = 20.0
+text = "Create Server"
+script = ExtResource( 2 )
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 302.0
 margin_right = 1024.0
 margin_bottom = 322.0
 alignment = 1
 
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer2"]
-margin_left = 493.0
-margin_right = 530.0
+[node name="Connect" type="Button" parent="VBoxContainer/HBoxContainer3"]
+margin_left = 480.0
+margin_right = 544.0
 margin_bottom = 20.0
-text = "test"
+text = "Connect"
+script = ExtResource( 3 )
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 326.0
+margin_right = 1024.0
+margin_bottom = 346.0
+alignment = 1
+
+[node name="Exit" type="Button" parent="VBoxContainer/HBoxContainer4"]
+margin_left = 480.0
+margin_right = 544.0
+margin_bottom = 20.0
+text = "Connect"
+script = ExtResource( 4 )
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="VBoxContainer/HBoxContainer/Button" method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Create Server" to="VBoxContainer/HBoxContainer2/Create Server" method="_on_Create_Server_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer3/Connect" to="VBoxContainer/HBoxContainer3/Connect" method="_on_Connect_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer4/Exit" to="VBoxContainer/HBoxContainer4/Exit" method="_on_Exit_pressed"]

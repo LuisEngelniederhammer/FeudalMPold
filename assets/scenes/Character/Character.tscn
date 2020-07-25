@@ -44,3 +44,11 @@ fov = 80.0
 
 [node name="dummy_character" parent="." instance=ExtResource( 2 )]
 transform = Transform( -0.179713, 0, 5.85578e-08, 0, 0.179713, 0, -5.85578e-08, 0, -0.179713, 0, -0.0119263, 0 )
+
+[node name="BoneAttachment" parent="dummy_character/Armature/Skeleton" index="0"]
+transform = Transform( 0.074826, 0.99513, 0.0641641, -0.997181, 0.0750308, -0.000783783, -0.00559426, -0.0639246, 0.997939, 7.63785, 13.053, -0.820823 )
+
+[node name="Cylinder 2" parent="dummy_character" index="2"]
+transform = Transform( -0.0836565, -0.152853, -0.158006, -0.120561, 0.157062, -0.125707, 0.198939, 0.030906, -0.142625, 0.888121, -1.13854, 0.0671906 )
+
+[editable path="dummy_character"]

@@ -3,6 +3,9 @@ extends Node
 const PATH_UI:String = "res://assets/ui";
 const PATH_SCENES:String = "res://assets/scenes";
 
+const FMP_NETWORK_CONTROLLER_NODE = "FMP_NetworkController";
+const FMP_SCENE_NODE = "FMP_Scene";
+
 const ERROR_CODES = {
 	1:{"code": "FAILED", "message": "Generic error."},
 	2:{"code": "ERR_UNAVAILABLE", "message": "Unavailable error."},

@@ -16,17 +16,23 @@ _global_script_class_icons={
 [application]
 
 config/name="FeudalMP"
-run/main_scene="res://assets/ui/MainMenu/MainMenu.tscn"
+run/main_scene="res://src/common/Entry.res"
 config/icon="res://icon.png"
 
 [autoload]
 
 GlobalConstants="*res://src/common/GlobalConstants.gd"
+Foundation="*res://src/common/Foundation.gd"
 SceneService="*res://src/common/SceneService.gd"
 
-[display]
+[debug]
 
-window/size/fullscreen=true
+gdscript/completion/autocomplete_setters_and_getters=true
+gdscript/warnings/unused_class_variable=true
+gdscript/warnings/unsafe_property_access=true
+gdscript/warnings/unsafe_method_access=true
+gdscript/warnings/unsafe_cast=true
+gdscript/warnings/unsafe_call_argument=true
 
 [input]
 
