@@ -3,22 +3,24 @@ extends Node
 const mainMenuPath:String = "MainMenu/MainMenu.tscn";
 
 func _ready():
-	SceneService.loadUI(mainMenuPath);
+	OS.set_window_title(GlobalConstants.FMP_TITLE + " - Version " + GlobalConstants.FMP_VERSION);
+	var logger = Logger.new("Foundation");
+	logger.info("Starting FeudalMP");
+	
+	if(isServer()):
+		#get_tree().change_scene("res://src/common/FeudalMP.res");
+		self.getNetworkController().startServer();
+	else:
+		SceneService.loadUI(mainMenuPath);
+
+func isServer() -> bool:
+	for cliParam in OS.get_cmdline_args():
+		if(cliParam == "--fmp-server"):
+			return true;
+	return false
 
 func getNetworkController() -> Node:
-	return get_tree().get_root().get_node("/root/Entry/NetworkController");
+	return get_tree().get_root().get_node(GlobalConstants.NODE_PATH_NETWORK_CONTROLLER);
 
 func getScene() -> Node:
-	return get_tree().get_root().get_node("/root/Entry/Scene");
-
-func startServer() -> void:
-	var serverResource = load("res://src/server/Server.tscn");
-	var serverNode = serverResource.instance();
-	##serverNode.set_name("Server");
-	get_tree().get_root().get_node("/root/Entry").call_deferred("add_child", serverNode);
-
-func connectClient() -> void:
-	var clientResource = load("res://src/client/Client.tscn");
-	var clientNode = clientResource.instance();
-	##serverNode.set_name("Server");
-	get_tree().get_root().get_node("/root/Entry").call_deferred("add_child", clientNode);
+	return get_tree().get_root().get_node(GlobalConstants.NODE_PATH_SCENE);

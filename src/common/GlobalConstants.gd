@@ -1,7 +1,14 @@
 extends Node
 
+const FMP_VERSION = "0.3.1"
+const FMP_TITLE = "FeudalMP"
+
 const PATH_UI:String = "res://assets/ui";
 const PATH_SCENES:String = "res://assets/scenes";
+
+const NODE_PATH_BASE:String = "/root/FeudalMP"
+const NODE_PATH_NETWORK_CONTROLLER:String = NODE_PATH_BASE + "/NetworkController"
+const NODE_PATH_SCENE:String = NODE_PATH_BASE + "/Scene"
 
 const FMP_NETWORK_CONTROLLER_NODE = "FMP_NetworkController";
 const FMP_SCENE_NODE = "FMP_Scene";

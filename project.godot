@@ -8,15 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Object",
+"class": "Logger",
+"language": "GDScript",
+"path": "res://src/util/Logger.gd"
+} ]
 _global_script_class_icons={
-
+"Logger": ""
 }
 
 [application]
 
 config/name="FeudalMP"
-run/main_scene="res://src/common/Entry.res"
+run/main_scene="res://src/common/FeudalMP.res"
 config/icon="res://icon.png"
 
 [autoload]
@@ -24,15 +29,22 @@ config/icon="res://icon.png"
 GlobalConstants="*res://src/common/GlobalConstants.gd"
 Foundation="*res://src/common/Foundation.gd"
 SceneService="*res://src/common/SceneService.gd"
+Server="*res://src/server/Server.gd"
 
 [debug]
 
+settings/stdout/verbose_stdout=true
 gdscript/completion/autocomplete_setters_and_getters=true
 gdscript/warnings/unused_class_variable=true
 gdscript/warnings/unsafe_property_access=true
 gdscript/warnings/unsafe_method_access=true
 gdscript/warnings/unsafe_cast=true
 gdscript/warnings/unsafe_call_argument=true
+
+[feudal_mp]
+
+server/port=9913
+server/max_players=200
 
 [input]
 

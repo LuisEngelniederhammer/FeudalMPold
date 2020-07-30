@@ -49,6 +49,7 @@ alignment = 1
 margin_left = 463.0
 margin_right = 560.0
 margin_bottom = 20.0
+disabled = true
 text = "Create Server"
 script = ExtResource( 2 )
 
@@ -72,10 +73,10 @@ margin_bottom = 346.0
 alignment = 1
 
 [node name="Exit" type="Button" parent="VBoxContainer/HBoxContainer4"]
-margin_left = 480.0
-margin_right = 544.0
+margin_left = 494.0
+margin_right = 529.0
 margin_bottom = 20.0
-text = "Connect"
+text = "Exit"
 script = ExtResource( 4 )
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="VBoxContainer/HBoxContainer/Button" method="_on_Button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/Create Server" to="VBoxContainer/HBoxContainer2/Create Server" method="_on_Create_Server_pressed"]
