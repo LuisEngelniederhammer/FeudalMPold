@@ -30,10 +30,10 @@ GlobalConstants="*res://src/common/GlobalConstants.gd"
 Foundation="*res://src/common/Foundation.gd"
 SceneService="*res://src/common/SceneService.gd"
 Server="*res://src/server/Server.gd"
+Client="*res://src/client/Client.gd"
 
 [debug]
 
-settings/stdout/verbose_stdout=true
 gdscript/completion/autocomplete_setters_and_getters=true
 gdscript/warnings/unused_class_variable=true
 gdscript/warnings/unsafe_property_access=true
