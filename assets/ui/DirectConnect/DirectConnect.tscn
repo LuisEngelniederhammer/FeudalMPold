@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://assets/ui/DirectConnect/Button.gd" type="Script" id=1]
+[ext_resource path="res://assets/predef/MenuBackground.res" type="PackedScene" id=2]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -9,34 +10,54 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="TextureRect" parent="." instance=ExtResource( 2 )]
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 alignment = 1
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
-margin_left = 422.0
-margin_right = 601.0
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
+margin_left = 412.0
+margin_right = 612.0
 margin_bottom = 600.0
+
+[node name="Panel" type="Panel" parent="HBoxContainer/CenterContainer"]
+margin_top = 200.0
+margin_right = 200.0
+margin_bottom = 400.0
+rect_min_size = Vector2( 200, 200 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/CenterContainer"]
+margin_left = 10.0
+margin_top = 249.0
+margin_right = 189.0
+margin_bottom = 351.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="ip" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
-margin_top = 249.0
+[node name="ip" type="HBoxContainer" parent="HBoxContainer/CenterContainer/VBoxContainer"]
 margin_right = 179.0
-margin_bottom = 275.0
+margin_bottom = 26.0
 
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/ip"]
+[node name="Label" type="Label" parent="HBoxContainer/CenterContainer/VBoxContainer/ip"]
 margin_top = 6.0
 margin_right = 75.0
 margin_bottom = 20.0
 text = "Ip address: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="LineEdit" type="LineEdit" parent="HBoxContainer/VBoxContainer/ip"]
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer/CenterContainer/VBoxContainer/ip"]
 margin_left = 79.0
 margin_right = 179.0
 margin_bottom = 26.0
@@ -45,36 +66,36 @@ text = "127.0.0.1"
 clear_button_enabled = true
 caret_blink = true
 
-[node name="port" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
-margin_top = 279.0
+[node name="port" type="HBoxContainer" parent="HBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 30.0
 margin_right = 179.0
-margin_bottom = 303.0
+margin_bottom = 54.0
 
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/port"]
+[node name="Label" type="Label" parent="HBoxContainer/CenterContainer/VBoxContainer/port"]
 margin_top = 5.0
 margin_right = 30.0
 margin_bottom = 19.0
 text = "Port:"
 
-[node name="LineEdit" type="LineEdit" parent="HBoxContainer/VBoxContainer/port"]
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer/CenterContainer/VBoxContainer/port"]
 margin_left = 34.0
 margin_right = 92.0
 margin_bottom = 24.0
 grow_horizontal = 2
 text = "9912"
 
-[node name="Button" type="Button" parent="HBoxContainer/VBoxContainer"]
-margin_top = 307.0
+[node name="Button" type="Button" parent="HBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 58.0
 margin_right = 179.0
-margin_bottom = 327.0
+margin_bottom = 78.0
 text = "Connect"
 script = ExtResource( 1 )
 
-[node name="Button2" type="Button" parent="HBoxContainer/VBoxContainer"]
-margin_top = 331.0
+[node name="Button2" type="Button" parent="HBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 82.0
 margin_right = 179.0
-margin_bottom = 351.0
+margin_bottom = 102.0
 text = "Back"
 script = ExtResource( 1 )
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/Button" to="HBoxContainer/VBoxContainer/Button" method="_on_Button_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/Button2" to="HBoxContainer/VBoxContainer/Button2" method="_on_Button2_pressed"]
+[connection signal="pressed" from="HBoxContainer/CenterContainer/VBoxContainer/Button" to="HBoxContainer/CenterContainer/VBoxContainer/Button" method="_on_Button_pressed"]
+[connection signal="pressed" from="HBoxContainer/CenterContainer/VBoxContainer/Button2" to="HBoxContainer/CenterContainer/VBoxContainer/Button2" method="_on_Button2_pressed"]
