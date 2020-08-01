@@ -1,4 +1,5 @@
 extends KinematicBody
+class_name Character
 
 var speed:int = 10;
 var acceleration:int = 10;
@@ -18,6 +19,8 @@ onready var characterAnimationPlayer = $dummy_character/AnimationPlayer;
 var escActive = false;
 var escMenu;
 var moved;
+
+signal state_change;
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -45,7 +48,8 @@ func _unhandled_input(event):
 		
 		head.rotate_x(deg2rad(-event.relative.y * mouseSensitivity));
 		head.rotation.x = clamp(head.rotation.x, deg2rad(-50), deg2rad(30));
-		Server.rpc_id(1, "_update_position", get_tree().get_network_unique_id(), get_translation(), get_rotation());
+		if(get_tree().get_network_peer() != null):
+			Server.rpc_unreliable_id(1, "_update_position", get_tree().get_network_unique_id(), get_translation(), get_rotation());
 
 func _physics_process(delta):
 	if(is_network_master()):
@@ -56,9 +60,15 @@ func _physics_process(delta):
 			direction -= transform.basis.z;
 			if(!characterAnimationPlayer.is_playing()):
 				characterAnimationPlayer.play("Running");
+				if(get_tree().get_network_peer() != null):
+					Server.rpc_unreliable_id(1, "_update_animation_state", get_tree().get_network_unique_id(), "Running", false);
 			moved = true;
 		if(Input.is_action_pressed("move_backward")):
 			direction += transform.basis.z;
+			if(!characterAnimationPlayer.is_playing()):
+				characterAnimationPlayer.play_backwards("Running");
+				if(get_tree().get_network_peer() != null):
+					Server.rpc_unreliable_id(1, "_update_animation_state", get_tree().get_network_unique_id(), "Running", true);
 			moved = true;
 		if(Input.is_action_pressed("move_left")):
 			direction -= transform.basis.x;
@@ -87,6 +97,6 @@ func _physics_process(delta):
 		velocity = velocity.linear_interpolate(direction * speed, acceleration * delta)
 		velocity = move_and_slide(velocity, Vector3.UP, true)
 		
-		if(moved):
-			Server.rpc_id(1, "_update_position", get_tree().get_network_unique_id(), get_translation(), get_rotation());
+		if(get_tree().get_network_peer() != null && (moved || (velocity.length() > 0))):
+			Server.rpc_unreliable_id(1, "_update_position", get_tree().get_network_unique_id(), get_translation(), get_rotation());
 	pass

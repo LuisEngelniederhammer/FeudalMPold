@@ -60,10 +60,10 @@ margin_bottom = 322.0
 alignment = 1
 
 [node name="Connect" type="Button" parent="VBoxContainer/HBoxContainer3"]
-margin_left = 480.0
-margin_right = 544.0
+margin_left = 458.0
+margin_right = 565.0
 margin_bottom = 20.0
-text = "Connect"
+text = "Direct Connect"
 script = ExtResource( 3 )
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer"]

@@ -17,6 +17,7 @@ func _write(text:String, level:String) -> void:
 	print("[%s] %s.%s :: %s" % [_getTimeFormat(), name, level, text]);
 	pass
 
+# INFO log level
 func info(text:String):
 	_write(text, "INFO");
 

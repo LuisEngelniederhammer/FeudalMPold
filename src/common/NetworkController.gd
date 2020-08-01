@@ -13,7 +13,8 @@ func startServer():
 	var server = NetworkedMultiplayerENet.new();
 	server.create_server(ProjectSettings.get_setting("feudal_mp/server/port"), ProjectSettings.get_setting("feudal_mp/server/max_players"));
 	get_tree().connect("network_peer_connected", Server, "_server_client_connected");
-	get_tree().connect("network_peer_disconnected", Server, "_server_client_disconnected");
+	var error = get_tree().connect("network_peer_disconnected", Server, "_server_client_disconnected");
+	logger.error(GlobalConstants.ERROR_CODES[error]);
 	get_tree().set_network_peer(server);
 	logger.info("Server peer created");
 

@@ -1,5 +1,7 @@
 extends Button
 
+
+
 func _on_Connect_pressed():
-	Foundation.getNetworkController().joinServer("127.0.0.1", 9913);
+	SceneService.loadUI("DirectConnect/DirectConnect.tscn");
 	pass # Replace with function body.

@@ -9,13 +9,25 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody",
+"class": "Character",
+"language": "GDScript",
+"path": "res://assets/scenes/Character/Character.gd"
+}, {
 "base": "Object",
 "class": "Logger",
 "language": "GDScript",
 "path": "res://src/util/Logger.gd"
+}, {
+"base": "Node",
+"class": "State",
+"language": "GDScript",
+"path": "res://src/client/State.gd"
 } ]
 _global_script_class_icons={
-"Logger": ""
+"Character": "",
+"Logger": "",
+"State": ""
 }
 
 [application]
@@ -43,7 +55,7 @@ gdscript/warnings/unsafe_call_argument=true
 
 [feudal_mp]
 
-server/port=9913
+server/port=9912
 server/max_players=200
 
 [input]

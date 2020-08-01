@@ -6,13 +6,19 @@ func _init():
 	logger = Logger.new("Server");
 	pass
 
-remote func _update_position(uid:int, position:Vector3, rotation:Vector3):
+remote func _update_position(uid:int, position:Vector3, rotation:Vector3) -> void:
 	if(!get_tree().is_network_server()):
 		return;
 	Foundation.getNetworkController().get_node(str(uid)).set_translation(position);
 	Foundation.getNetworkController().get_node(str(uid)).set_rotation(rotation);
-	logger.info("Broadcasting position to peers for player uid=%s" % uid);
+	#logger.info("Broadcasting position to peers for player uid=%s" % uid);
 	Client.rpc_unreliable("_update_client_position", uid, position, rotation);
+	pass
+
+remote func _update_animation_state(uid:int, animation:String, backwards:bool = false) -> void:
+	if(!get_tree().is_network_server()):
+		return;
+	Client.rpc_unreliable("_update_animation_state", uid, animation, backwards);
 	pass
 
 remote func jipPlayer(uid:int) -> void:
@@ -44,4 +50,5 @@ func _server_client_disconnected(uid:int):
 	var player = Foundation.getNetworkController().get_node(str(uid));
 	Foundation.getNetworkController().remove_child(player);
 	player.queue_free();
+	Client.rpc("playerDisconnected", uid);
 	pass
