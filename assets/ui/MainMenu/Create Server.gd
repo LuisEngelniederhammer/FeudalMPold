@@ -3,5 +3,6 @@ extends Button
 
 
 func _on_Create_Server_pressed():
-	Foundation.startServer();
+# warning-ignore:unsafe_method_access
+	Foundation.getNetworkController().startServer();
 	pass # Replace with function body.

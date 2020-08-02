@@ -1,11 +1,38 @@
 extends Node
 
 var logger:Logger;
+var clientName:String;
 
 func _init():
 	logger = Logger.new("Client");
 	pass
 	
+func joinServer(ip:String, port:int, name:String) -> void:
+	clientName = name;
+	logger.info("Trying to connect to %s:%s" % [ip, port]);
+	var peer = NetworkedMultiplayerENet.new();
+	var err = peer.create_client(ip, port);
+	if(err > 0):
+		logger.error("Cannot connect to server %s:%s -> %s" % [ip,port,GlobalConstants.ERROR_CODES[err]]);
+	else:
+		get_tree().connect("connected_to_server", Client, "_client_join_success")
+		get_tree().connect("connection_failed", Client, "_client_join_failure")
+		get_tree().connect("server_disconnected", Client, "_client_server_disconnected")
+		logger.info("Client peer created")
+		get_tree().set_network_peer(peer);
+	pass
+
+remote func syncServerInfo(serverInfoSerialized:String) -> void:
+	logger.info("received server info");
+	var serverInfo:Dictionary;
+	serverInfo = JSON.parse(serverInfoSerialized).result;
+	logger.info("name: %s, ip: %s, port: %s, players: %s/%s, mapName: %s, mapHash: %s, mapFileName: %s" % [serverInfo.name, serverInfo.ip, serverInfo.port, serverInfo.connectedPlayers, serverInfo.maxPayers,serverInfo.mapInfo.name, serverInfo.mapInfo.fileHash, serverInfo.mapInfo.fileName]);
+	logger.info("Loading map " + serverInfo.mapInfo.fileName);
+	SceneService.loadScene(serverInfo.mapInfo.fileName);
+	logger.info("sending authentication data to the server");
+	Server.rpc_id(1,"jipPlayer", get_tree().get_network_unique_id(), clientName);
+	pass
+
 remote func _update_client_position(uid:int, position:Vector3, rotation:Vector3) -> void:
 	if(uid != get_tree().get_network_unique_id()):
 		#logger.info("updating client position");
@@ -18,13 +45,16 @@ remote func _update_animation_state(uid:int, animation:String, backwards:bool = 
 		return;
 	var targetClient = Foundation.getNetworkController().get_node(str(uid));
 	if(!targetClient.characterAnimationPlayer.is_playing()):
-		targetClient.characterAnimationPlayer.play(animation);
+		if(backwards):
+			targetClient.characterAnimationPlayer.play_backwards(animation);
+		else:
+			targetClient.characterAnimationPlayer.play(animation);
 	pass
 
-remote func jipPlayer(uid:int, translation = null, rotation = null) -> void:
+remote func jipPlayer(uid:int, name:String, translation = null, rotation = null) -> void:
 	var player = preload("res://assets/scenes/Character/Character.tscn").instance();
 	var nameTag = preload("res://assets/predef/billboard_text.res").instance();
-	nameTag.get_node("Viewport/Label").set_text(str(uid));
+	nameTag.get_node("Viewport/Label").set_text(str(uid) + " " + name);
 	nameTag.set_translation(Vector3(0.0,4.0,0.0));
 	player.set_name(str(uid));
 	player.set_network_master(uid); # Will be explained later
@@ -40,15 +70,12 @@ remote func jipPlayer(uid:int, translation = null, rotation = null) -> void:
 remote func jipConnectedClients(clients:Array) -> void:
 	logger.info("Syncing all already connected clients with local peer. size=%s" % clients.size());
 	for client in clients:
-		jipPlayer(int(client[0]),client[1],client[2]);
+		jipPlayer(int(client[0]), client[1], client[2], client[3]);
 	pass
 
 func _client_join_success():
-	logger.info("joined successfully");
-	logger.info("Loading map");
-	SceneService.loadScene("test/WaterShaderTest.scn");
-	logger.info("sending authentication data to the server");
-	Server.rpc_id(1,"jipPlayer", get_tree().get_network_unique_id());
+	logger.info("connected successfully - trying to obtain server info");
+	Server.rpc_id(1, "getServerInfo");
 	pass
 
 func _client_join_failure():

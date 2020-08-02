@@ -78,11 +78,11 @@ func _physics_process(delta):
 			moved = true;
 		if(Input.is_action_just_pressed("jump") && is_on_floor()):
 			cc.y = jump;
-			print("jump")
+			#print("jump")
 			moved = true;
 		if(Input.is_action_pressed("move_sprint") && is_on_floor()):
 			speed = 35;
-			print("sprinting")
+			#print("sprinting")
 			moved = true;
 		else:
 			speed = 10;

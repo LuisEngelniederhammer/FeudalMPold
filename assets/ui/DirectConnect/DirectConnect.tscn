@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/ui/DirectConnect/Button.gd" type="Script" id=1]
 [ext_resource path="res://assets/predef/MenuBackground.res" type="PackedScene" id=2]
+[ext_resource path="res://assets/fonts/avara_dynamicfont.res" type="DynamicFont" id=3]
+[ext_resource path="res://assets/predef/MenuHeader.res" type="PackedScene" id=4]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -11,6 +13,8 @@ __meta__ = {
 }
 
 [node name="TextureRect" parent="." instance=ExtResource( 2 )]
+
+[node name="HBoxContainer2" parent="." instance=ExtResource( 4 )]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchor_right = 1.0
@@ -22,21 +26,22 @@ __meta__ = {
 }
 
 [node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
-margin_left = 412.0
-margin_right = 612.0
+margin_left = 379.0
+margin_right = 645.0
 margin_bottom = 600.0
 
 [node name="Panel" type="Panel" parent="HBoxContainer/CenterContainer"]
-margin_top = 200.0
-margin_right = 200.0
-margin_bottom = 400.0
-rect_min_size = Vector2( 200, 200 )
+margin_top = 150.0
+margin_right = 266.0
+margin_bottom = 450.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 266, 300 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/CenterContainer"]
-margin_left = 10.0
-margin_top = 249.0
-margin_right = 189.0
-margin_bottom = 351.0
+margin_top = 211.0
+margin_right = 266.0
+margin_bottom = 389.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
@@ -44,57 +49,81 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="name" type="HBoxContainer" parent="HBoxContainer/CenterContainer/VBoxContainer"]
+margin_right = 266.0
+margin_bottom = 34.0
+
+[node name="Label" type="Label" parent="HBoxContainer/CenterContainer/VBoxContainer/name"]
+margin_top = 5.0
+margin_right = 64.0
+margin_bottom = 29.0
+custom_fonts/font = ExtResource( 3 )
+text = "Name:"
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer/CenterContainer/VBoxContainer/name"]
+margin_left = 68.0
+margin_right = 150.0
+margin_bottom = 34.0
+custom_fonts/font = ExtResource( 3 )
+
 [node name="ip" type="HBoxContainer" parent="HBoxContainer/CenterContainer/VBoxContainer"]
-margin_right = 179.0
-margin_bottom = 26.0
+margin_top = 38.0
+margin_right = 266.0
+margin_bottom = 72.0
 
 [node name="Label" type="Label" parent="HBoxContainer/CenterContainer/VBoxContainer/ip"]
-margin_top = 6.0
-margin_right = 75.0
-margin_bottom = 20.0
+margin_top = 5.0
+margin_right = 112.0
+margin_bottom = 29.0
+custom_fonts/font = ExtResource( 3 )
 text = "Ip address: "
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LineEdit" type="LineEdit" parent="HBoxContainer/CenterContainer/VBoxContainer/ip"]
-margin_left = 79.0
-margin_right = 179.0
-margin_bottom = 26.0
-rect_min_size = Vector2( 100, 0 )
+margin_left = 116.0
+margin_right = 266.0
+margin_bottom = 34.0
+rect_min_size = Vector2( 150, 0 )
+custom_fonts/font = ExtResource( 3 )
 text = "127.0.0.1"
 clear_button_enabled = true
 caret_blink = true
 
 [node name="port" type="HBoxContainer" parent="HBoxContainer/CenterContainer/VBoxContainer"]
-margin_top = 30.0
-margin_right = 179.0
-margin_bottom = 54.0
+margin_top = 76.0
+margin_right = 266.0
+margin_bottom = 110.0
 
 [node name="Label" type="Label" parent="HBoxContainer/CenterContainer/VBoxContainer/port"]
 margin_top = 5.0
-margin_right = 30.0
-margin_bottom = 19.0
+margin_right = 48.0
+margin_bottom = 29.0
+custom_fonts/font = ExtResource( 3 )
 text = "Port:"
 
 [node name="LineEdit" type="LineEdit" parent="HBoxContainer/CenterContainer/VBoxContainer/port"]
-margin_left = 34.0
-margin_right = 92.0
-margin_bottom = 24.0
+margin_left = 52.0
+margin_right = 134.0
+margin_bottom = 34.0
 grow_horizontal = 2
+custom_fonts/font = ExtResource( 3 )
 text = "9912"
 
 [node name="Button" type="Button" parent="HBoxContainer/CenterContainer/VBoxContainer"]
-margin_top = 58.0
-margin_right = 179.0
-margin_bottom = 78.0
+margin_top = 114.0
+margin_right = 266.0
+margin_bottom = 144.0
+custom_fonts/font = ExtResource( 3 )
 text = "Connect"
 script = ExtResource( 1 )
 
 [node name="Button2" type="Button" parent="HBoxContainer/CenterContainer/VBoxContainer"]
-margin_top = 82.0
-margin_right = 179.0
-margin_bottom = 102.0
+margin_top = 148.0
+margin_right = 266.0
+margin_bottom = 178.0
+custom_fonts/font = ExtResource( 3 )
 text = "Back"
 script = ExtResource( 1 )
 [connection signal="pressed" from="HBoxContainer/CenterContainer/VBoxContainer/Button" to="HBoxContainer/CenterContainer/VBoxContainer/Button" method="_on_Button_pressed"]

@@ -15,6 +15,21 @@ _global_script_classes=[ {
 "path": "res://assets/scenes/Character/Character.gd"
 }, {
 "base": "Object",
+"class": "ClientInfo",
+"language": "GDScript",
+"path": "res://src/model/ClientInfo.gd"
+}, {
+"base": "Object",
+"class": "FMP_ServerInfo",
+"language": "GDScript",
+"path": "res://src/model/FMP_ServerInfo.gd"
+}, {
+"base": "Object",
+"class": "FMP_ServerMapInfo",
+"language": "GDScript",
+"path": "res://src/model/FMP_ServerMapInfo.gd"
+}, {
+"base": "Object",
 "class": "Logger",
 "language": "GDScript",
 "path": "res://src/util/Logger.gd"
@@ -26,6 +41,9 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Character": "",
+"ClientInfo": "",
+"FMP_ServerInfo": "",
+"FMP_ServerMapInfo": "",
 "Logger": "",
 "State": ""
 }
