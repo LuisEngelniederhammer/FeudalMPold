@@ -1,5 +1,2 @@
-* Make some data models for cleaner code
-  * Serverinfo data model
-  * Client data model
-* server <-> client sync with current map
+* Only send updates of movement and rotation to clients that have already initialiezed the whole node tree of connected clients, otherwise the nodes with the uid as name cannot be found -> error
 * ???((Maybe Downloadable maps from connecting server)) -> https://godotengine.org/qa/903/how-to-save-a-scene-at-run-timesyncServerInfo

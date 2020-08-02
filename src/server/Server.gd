@@ -19,7 +19,7 @@ func start() -> void:
 	get_tree().connect("network_peer_disconnected", Server, "_server_client_disconnected");
 	get_tree().set_network_peer(server);
 	logger.info("Server peer created");
-	var mapInfo = FMP_ServerMapInfo.new("Test Scene", "test/WaterShaderTest.scn", 1);
+	var mapInfo = FMP_ServerMapInfo.new("Test Scene", "DevWorld/DevWorld.scn", 1);
 	serverInfo = FMP_ServerInfo.new("Offical FeudalMP Dev Server", "91.132.144.120", ProjectSettings.get_setting("feudal_mp/server/port"), ProjectSettings.get_setting("feudal_mp/server/max_players"), mapInfo);
 	
 	pass

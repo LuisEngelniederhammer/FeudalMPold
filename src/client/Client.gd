@@ -28,6 +28,7 @@ remote func syncServerInfo(serverInfoSerialized:String) -> void:
 	serverInfo = JSON.parse(serverInfoSerialized).result;
 	logger.info("name: %s, ip: %s, port: %s, players: %s/%s, mapName: %s, mapHash: %s, mapFileName: %s" % [serverInfo.name, serverInfo.ip, serverInfo.port, serverInfo.connectedPlayers, serverInfo.maxPayers,serverInfo.mapInfo.name, serverInfo.mapInfo.fileHash, serverInfo.mapInfo.fileName]);
 	logger.info("Loading map " + serverInfo.mapInfo.fileName);
+	#TODO handle if the client does not have the map
 	SceneService.loadScene(serverInfo.mapInfo.fileName);
 	logger.info("sending authentication data to the server");
 	Server.rpc_id(1,"jipPlayer", get_tree().get_network_unique_id(), clientName);
