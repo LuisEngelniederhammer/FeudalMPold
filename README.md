@@ -23,6 +23,10 @@ When the top two tasks are done, I can start to do some first gameplay mechanics
 
 * etc
 
+## Support me
+if you whish to support me, please go ahead.
+[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QPDPYYPQWW6NU&source=url)
+
 ## Loose projectplan
 * Infrastructure and architecture
   * setting up git
