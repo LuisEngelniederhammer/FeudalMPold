@@ -23,9 +23,7 @@ When the top two tasks are done, I can start to do some first gameplay mechanics
 
 * etc
 
-## Support me
-if you whish to support me, please go ahead.
-[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QPDPYYPQWW6NU&source=url)
+
 
 ## Loose projectplan
 * Infrastructure and architecture
@@ -208,3 +206,8 @@ In general I am open to contributions as long as they actually contribute someth
 * **one handed** = every weapon that should be used with one hand, like short swords, daggers, maces etc.
 * **two handed** = longswords, axes etc.
 * **spear-like** = spears, pikes, longsword in mordhau position
+
+
+###### Support me
+if you whish to support me, please go ahead.
+[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QPDPYYPQWW6NU&source=url)
