@@ -1,5 +1,4 @@
 extends Object
-class_name FMP_ServerMapInfo
 
 var name:String;
 #should be foldername/mapname.scn within scenes

@@ -1,5 +1,6 @@
 extends Object
-class_name FMP_ServerInfo
+
+const FMP_ServerMapInfo = preload("res://src/server/entity/FMP_ServerMapInfo.gd");
 
 var name:String;
 var ip:String;

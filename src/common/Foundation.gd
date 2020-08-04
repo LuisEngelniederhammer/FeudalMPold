@@ -7,6 +7,8 @@ func _ready():
 	var logger = Logger.new("Foundation");
 	logger.info("Starting FeudalMP");
 	
+	print(IP.get_local_interfaces());
+	
 	if(isServer()):
 		#get_tree().change_scene("res://src/common/FeudalMP.res");
 		self.getNetworkController().startServer();

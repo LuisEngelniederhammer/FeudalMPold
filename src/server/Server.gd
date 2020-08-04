@@ -1,6 +1,14 @@
 extends Node
+# includes
+const ServerAuthenticator = preload("res://src/server/ServerAuthenticator.gd");
+const ServerProperties = preload("res://src/server/ServerProperties.gd");
+const FMP_ServerInfo = preload("res://src/server/entity/FMP_ServerInfo.gd");
+const FMP_ServerMapInfo = preload("res://src/server/entity/FMP_ServerMapInfo.gd");
 
 var logger:Logger;
+
+var authenticator:ServerAuthenticator setget ,getAuthenticator;
+
 var serverInfo:FMP_ServerInfo;
 var clients:Dictionary = {};
 
@@ -12,16 +20,18 @@ func start() -> void:
 	logger.info("Starting FeudalMP Server on port %s" % [ProjectSettings.get_setting("feudal_mp/server/port")]);
 	OS.set_window_title(GlobalConstants.FMP_TITLE + " - Version " + GlobalConstants.FMP_VERSION + " SERVER");
 	var server = NetworkedMultiplayerENet.new();
-	server.create_server(ProjectSettings.get_setting("feudal_mp/server/port"), ProjectSettings.get_setting("feudal_mp/server/max_players"));
-# warning-ignore:return_value_discarded
+	server.create_server(ProjectSettings.get_setting(ServerProperties.PORT), ProjectSettings.get_setting(ServerProperties.MAX_PLAYERS));
+	# warning-ignore:return_value_discarded
 	get_tree().connect("network_peer_connected", Server, "_server_client_connected");
-# warning-ignore:return_value_discarded
+	# warning-ignore:return_value_discarded
 	get_tree().connect("network_peer_disconnected", Server, "_server_client_disconnected");
 	get_tree().set_network_peer(server);
-	logger.info("Server peer created");
-	var mapInfo = FMP_ServerMapInfo.new("Test Scene", "DevWorld/DevWorld.scn", 1);
-	serverInfo = FMP_ServerInfo.new("Offical FeudalMP Dev Server", "91.132.144.120", ProjectSettings.get_setting("feudal_mp/server/port"), ProjectSettings.get_setting("feudal_mp/server/max_players"), mapInfo);
 	
+	authenticator = ServerAuthenticator.new();
+	self.add_child(authenticator);
+
+	var mapInfo = FMP_ServerMapInfo.new(ProjectSettings.get_setting(ServerProperties.MAP_NAME), ProjectSettings.get_setting(ServerProperties.MAP_FILENAME), 1);
+	serverInfo = FMP_ServerInfo.new(ProjectSettings.get_setting(ServerProperties.NAME), ProjectSettings.get_setting(ServerProperties.HOST), ProjectSettings.get_setting(ServerProperties.PORT), ProjectSettings.get_setting(ServerProperties.MAX_PLAYERS), mapInfo);
 	pass
 
 remote func getServerInfo() -> void:
@@ -30,6 +40,10 @@ remote func getServerInfo() -> void:
 	var dictServerInfo = inst2dict(serverInfo);
 	dictServerInfo.mapInfo = inst2dict(serverInfo.mapInfo);
 	Client.rpc_id(senderId, "syncServerInfo", to_json(dictServerInfo));
+	pass
+
+remote func authentication(uid:int, name:String) -> void:
+	authenticator.authClient(uid, name);
 	pass
 
 remote func _update_position(uid:int, position:Vector3, rotation:Vector3) -> void:

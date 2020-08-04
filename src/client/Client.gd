@@ -1,5 +1,7 @@
 extends Node
 
+const ServerDisconnectReason = preload("res://src/common/entity/ServerDisconnectReason.gd");
+
 var logger:Logger;
 var clientName:String;
 
@@ -25,13 +27,27 @@ func joinServer(ip:String, port:int, name:String) -> void:
 remote func syncServerInfo(serverInfoSerialized:String) -> void:
 	logger.info("received server info");
 	var serverInfo:Dictionary;
-	serverInfo = JSON.parse(serverInfoSerialized).result;
+	serverInfo = JSON.parse(serverInfoSerialized).get_result();
 	logger.info("name: %s, ip: %s, port: %s, players: %s/%s, mapName: %s, mapHash: %s, mapFileName: %s" % [serverInfo.name, serverInfo.ip, serverInfo.port, serverInfo.connectedPlayers, serverInfo.maxPayers,serverInfo.mapInfo.name, serverInfo.mapInfo.fileHash, serverInfo.mapInfo.fileName]);
 	logger.info("Loading map " + serverInfo.mapInfo.fileName);
 	#TODO handle if the client does not have the map
 	SceneService.loadScene(serverInfo.mapInfo.fileName);
 	logger.info("sending authentication data to the server");
-	Server.rpc_id(1,"jipPlayer", get_tree().get_network_unique_id(), clientName);
+	Server.rpc_id(1, "authentication", get_tree().get_network_unique_id(), clientName);
+	#Server.rpc_id(1,"jipPlayer", get_tree().get_network_unique_id(), clientName);
+	pass
+
+remote func disconnectByServer(type:int, reason:String) -> void:
+	logger.warn("The server disconnected you! reason=%s type=%s" % [reason, ServerDisconnectReason.TYPE_REASONS[type]]);
+	var acceptDialog = preload("res://assets/ui/popup/AcceptServerDisconnect.res").instance();
+	acceptDialog.set_text("The server disconnected you!\n\nreason=%s \ntype=%s" % [reason, ServerDisconnectReason.TYPE_REASONS[type]]);
+	self.add_child(acceptDialog);
+	acceptDialog.popup_centered_clamped();
+
+	get_tree().disconnect("connected_to_server", Client, "_client_join_success");
+	get_tree().disconnect("connection_failed", Client, "_client_join_failure");
+	get_tree().disconnect("server_disconnected", Client, "_client_server_disconnected");
+	get_tree().set_network_peer(null);
 	pass
 
 remote func _update_client_position(uid:int, position:Vector3, rotation:Vector3) -> void:
