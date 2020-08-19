@@ -15,25 +15,13 @@ _global_script_classes=[ {
 "path": "res://assets/scenes/Character/Character.gd"
 }, {
 "base": "Object",
-"class": "ClientInfo",
-"language": "GDScript",
-"path": "res://src/model/ClientInfo.gd"
-}, {
-"base": "Object",
 "class": "Logger",
 "language": "GDScript",
 "path": "res://src/util/Logger.gd"
-}, {
-"base": "Node",
-"class": "State",
-"language": "GDScript",
-"path": "res://src/client/State.gd"
 } ]
 _global_script_class_icons={
 "Character": "",
-"ClientInfo": "",
-"Logger": "",
-"State": ""
+"Logger": ""
 }
 
 [application]
@@ -47,8 +35,6 @@ config/icon="res://icon.png"
 GlobalConstants="*res://src/common/GlobalConstants.gd"
 Foundation="*res://src/common/Foundation.gd"
 SceneService="*res://src/common/SceneService.gd"
-Server="*res://src/server/Server.gd"
-Client="*res://src/client/Client.gd"
 
 [debug]
 
@@ -63,9 +49,10 @@ gdscript/warnings/unsafe_call_argument=true
 
 server/port=9912
 server/max_players=200
-server/name=""
-server/map_name=""
-server/map_filename=""
+server/name="Offical FeudalMP Dev Server"
+server/map_name="Test Scene"
+server/map_filename="DevWorld/DevWorld.scn"
+server/host="127.0.0.1"
 
 [input]
 

@@ -5,6 +5,7 @@ const FMP_TITLE = "FeudalMP"
 
 const PATH_UI:String = "res://assets/ui";
 const PATH_SCENES:String = "res://assets/scenes";
+const PATH_SRC:String = "res://src";
 
 const NODE_PATH_BASE:String = "/root/FeudalMP"
 const NODE_PATH_NETWORK_CONTROLLER:String = NODE_PATH_BASE + "/NetworkController"

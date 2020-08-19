@@ -7,11 +7,8 @@ func _ready():
 	var logger = Logger.new("Foundation");
 	logger.info("Starting FeudalMP");
 	
-	print(IP.get_local_interfaces());
-	
 	if(isServer()):
-		#get_tree().change_scene("res://src/common/FeudalMP.res");
-		self.getNetworkController().startServer();
+		get_tree().change_scene("res://src/network/server/Server.tscn");
 	else:
 		SceneService.loadUI(mainMenuPath);
 
@@ -20,9 +17,6 @@ func isServer() -> bool:
 		if(cliParam == "--fmp-server"):
 			return true;
 	return false
-
-func getNetworkController() -> Node:
-	return get_tree().get_root().get_node(GlobalConstants.NODE_PATH_NETWORK_CONTROLLER);
 
 func getScene() -> Node:
 	return get_tree().get_root().get_node(GlobalConstants.NODE_PATH_SCENE);
