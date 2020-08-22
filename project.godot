@@ -13,15 +13,9 @@ _global_script_classes=[ {
 "class": "Character",
 "language": "GDScript",
 "path": "res://assets/scenes/Character/Character.gd"
-}, {
-"base": "Object",
-"class": "Logger",
-"language": "GDScript",
-"path": "res://src/util/Logger.gd"
 } ]
 _global_script_class_icons={
-"Character": "",
-"Logger": ""
+"Character": ""
 }
 
 [application]

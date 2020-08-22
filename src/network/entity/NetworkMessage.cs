@@ -3,16 +3,22 @@ using Godot;
 
 namespace FeudalMP.Network.Entity
 {
-	abstract public class NetworkMessage : Node
+	abstract public class NetworkMessage
 	{
-		private int action;
+		private NetworkMessageAction action;
 		private string data;
 
-		protected NetworkMessage(int action, String data)
+		protected NetworkMessage(NetworkMessageAction action, string data)
 		{
 			this.action = action;
 			this.data = data;
 		}
 
+		protected NetworkMessage(SceneTree Tree, String server)
+		{
+		}
+		public abstract byte[] getPacket();
+
+		public abstract void callback(int peerId, string data);
 	}
 }
