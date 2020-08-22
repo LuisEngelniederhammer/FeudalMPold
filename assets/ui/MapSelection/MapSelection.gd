@@ -63,6 +63,6 @@ func _on_Start_pressed():
 	var player = preload("res://assets/scenes/Character/Character.tscn").instance();
 	player.set_name(str(get_tree().get_network_unique_id()));
 	player.set_network_master(get_tree().get_network_unique_id()); # Will be explained later
-	Foundation.getNetworkController().add_child(player);
+	#Foundation.getNetworkController().add_child(player);
 	SceneService.loadScene(scenes[optionButton.get_selected_id()]);
 	pass # Replace with function body.

@@ -27,14 +27,8 @@ _global_script_class_icons={
 [application]
 
 config/name="FeudalMP"
-run/main_scene="res://src/common/FeudalMP.res"
+run/main_scene="res://src/common/Main.res"
 config/icon="res://icon.png"
-
-[autoload]
-
-GlobalConstants="*res://src/common/GlobalConstants.gd"
-Foundation="*res://src/common/Foundation.gd"
-SceneService="*res://src/common/SceneService.gd"
 
 [debug]
 

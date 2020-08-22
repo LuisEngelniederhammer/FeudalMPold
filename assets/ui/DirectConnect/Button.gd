@@ -9,7 +9,7 @@ onready var nameField:LineEdit = get_node("../name/LineEdit");
 
 func _on_Button_pressed():
 	var gameClient = GameClient.new();
-	gameClient.joinServer(get_tree(), ipField.get_text(),int(portField.get_text()),nameField.get_text());
+	gameClient.joinServer(get_tree(), ipField.get_text(),int(portField.get_text()), nameField.get_text());
 	pass # Replace with function body.
 
 

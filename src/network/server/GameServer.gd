@@ -2,14 +2,15 @@ extends Node
 
 #includes
 const Logger = preload("res://src/util/Logger.gd");
-const PaketDispatcher = preload("res://src/network/PaketDispatcher.gd")
+const PaketDispatcher = preload("res://src/network/PaketDispatcher.gd");
 const NetworkMessageAction = preload("res://src/network/entity/NetworkMessageAction.gd");
-const ClientAuthenticationCallback = preload("res://src/network/server/control/ClientAuthenticationCallback.gd");
+const ClientSendAuthenticationCallback = preload("res://src/network/server/control/ClientSendAuthenticationCallback.gd");
 
 #attributes
 var _eNetInstance:NetworkedMultiplayerENet setget setENetInstance, getENetInstance;
 var LOG:Logger;
 var dispatcher:PaketDispatcher;
+var peers:Dictionary;
 
 func _init(tree:SceneTree, port:int):
 	LOG = Logger.new("GameServer");
@@ -24,7 +25,7 @@ func _init(tree:SceneTree, port:int):
 	_eNetInstance.connect("peer_connected", self, "receive_peer_connected");
 	_eNetInstance.connect("peer_disconnected", self, "receive_peer_disconnected");
 
-	dispatcher.registerCallback(NetworkMessageAction.CLIENT_SEND_AUTHENTICATION, ClientAuthenticationCallback.new());
+	dispatcher.registerCallback(NetworkMessageAction.CLIENT_SEND_AUTHENTICATION, ClientSendAuthenticationCallback.new(tree, self));
 	return;
 
 #Do not allow to overwrite the eNet instance
