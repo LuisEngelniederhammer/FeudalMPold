@@ -13,12 +13,12 @@ namespace FeudalMP.Network.Entity.NetworkMessages
 		{
 		}
 
-		public override void callback(int peerId, string data)
+		public override void Callback(int peerId, NetworkMessage data)
 		{
 			throw new NotImplementedException();
 		}
 
-		public override byte[] getPacket()
+		public override byte[] GetPacket()
 		{
 			throw new NotImplementedException();
 		}

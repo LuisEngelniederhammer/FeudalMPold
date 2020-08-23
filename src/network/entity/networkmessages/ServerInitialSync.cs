@@ -2,6 +2,7 @@ using Godot;
 using System;
 using FeudalMP.Util;
 using FeudalMP.Common;
+using System.Text.Json;
 
 namespace FeudalMP.Network.Entity.NetworkMessages
 {
@@ -17,12 +18,12 @@ namespace FeudalMP.Network.Entity.NetworkMessages
         {
         }
 
-        public override void callback(int peerId, string data)
+        public override void Callback(int peerId, NetworkMessage data)
         {
             Logger log = new Logger(this.GetType().Name);
             log.Info("new ServerInitialSync package received from server");
-            //@TODO use received map file for loading
-            new SceneService(Tree).LoadScene("DevWorld/DevWorld.scn");
+            ServerInitialSync received = data as ServerInitialSync;
+            new SceneService(Tree).LoadScene(received.MapFilePath);
 
             PackedScene charResource = ResourceLoader.Load("res://assets/scenes/Character/Character.tscn") as PackedScene;
             Node charNode = charResource.Instance();
@@ -31,15 +32,9 @@ namespace FeudalMP.Network.Entity.NetworkMessages
             Tree.Root.GetNode(SceneService.NODE_PATH_SCENE).AddChild(charNode);
         }
 
-        public override byte[] getPacket()
+        public override byte[] GetPacket()
         {
-            JSON.Print(this);
-
-            //tring json = JsonConvert.SerializeObject(this);
-            string jsonString;
-            //jsonString = JsonSerializer.Serialize(this);
-
-            return new byte[1];
+            return JsonSerializer.SerializeToUtf8Bytes(this);
         }
     }
 }

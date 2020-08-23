@@ -20,7 +20,7 @@ namespace FeudalMP.Network
 
 		public Error toServer(NetworkMessage message, TransferModeEnum transferMode = TransferModeEnum.Unreliable)
 		{
-			return toServerRaw(message.getPacket(), transferMode);
+			return toServerRaw(message.GetPacket(), transferMode);
 		}
 
 		public Error toClientRaw(int targetPeerId, byte[] packet, TransferModeEnum transferMode = TransferModeEnum.Unreliable)
@@ -30,7 +30,7 @@ namespace FeudalMP.Network
 
 		public Error toClient(int targetPeerId, NetworkMessage message, TransferModeEnum transferMode = TransferModeEnum.Unreliable)
 		{
-			return toClientRaw(targetPeerId, message.getPacket(), transferMode);
+			return toClientRaw(targetPeerId, message.GetPacket(), transferMode);
 		}
 	}
 }

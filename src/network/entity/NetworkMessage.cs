@@ -3,25 +3,25 @@ using Godot;
 
 namespace FeudalMP.Network.Entity
 {
-	abstract public class NetworkMessage
-	{
-		protected NetworkMessageAction action;
-		protected string data;
-		protected SceneTree Tree;
-	
+    abstract public class NetworkMessage
+    {
+        public NetworkMessageAction Action { get; }
+        protected string data;
+        protected SceneTree Tree;
 
-		protected NetworkMessage(NetworkMessageAction action, string data)
-		{
-			this.action = action;
-			this.data = data;
-		}
 
-		protected NetworkMessage(SceneTree Tree, String server)
-		{
-			this.Tree = Tree;
-		}
-		public abstract byte[] getPacket();
+        protected NetworkMessage(NetworkMessageAction action, string data)
+        {
+            this.Action = action;
+            this.data = data;
+        }
 
-		public abstract void callback(int peerId, string data);
-	}
+        protected NetworkMessage(SceneTree Tree, String server)
+        {
+            this.Tree = Tree;
+        }
+        public abstract byte[] GetPacket();
+
+        public abstract void Callback(int peerId, NetworkMessage data);
+    }
 }
