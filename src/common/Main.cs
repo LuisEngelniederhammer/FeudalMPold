@@ -1,7 +1,7 @@
 using Godot;
 using FeudalMP.Util;
-using System;
 using FeudalMP.Network.Entity.NetworkMessages;
+using System.Text.Json;
 
 namespace FeudalMP.Common
 {
@@ -15,7 +15,8 @@ namespace FeudalMP.Common
 
             ServerInitialSync s = new ServerInitialSync("testdata");
             string jsonString;
-            jsonString = System.Text.Json.JsonSerializer.Serialize(s);
+            jsonString = JsonSerializer.Serialize(s);
+            
 
             if (isServer())
             {

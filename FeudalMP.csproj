@@ -46,9 +46,10 @@
       <Version>1.0.0</Version>
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="System.Text.Json">
+    <Reference Include="System.Text.Json">
+      <HintPath>/home/luis/.nuget/packages/system.text.json/4.7.2/lib/net461/System.Text.Json.dll</HintPath>
       <Version>4.7.2</Version>
-    </PackageReference>
+    </Reference>
     <Reference Include="GodotSharp">
       <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharp.dll</HintPath>
       <Private>False</Private>
@@ -57,7 +58,7 @@
       <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharpEditor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="System"></Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
