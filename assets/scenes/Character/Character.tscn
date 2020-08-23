@@ -1,13 +1,13 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://assets/scenes/Character/Character.gd" type="Script" id=1]
+[ext_resource path="res://assets/scenes/Character/Character.cs" type="Script" id=1]
 [ext_resource path="res://assets/scenes/Character/dummy_character.tscn" type="PackedScene" id=2]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.75
 height = 1.5
 
-[sub_resource type="CubeMesh" id=3]
+[sub_resource type="CubeMesh" id=2]
 size = Vector3( 0.2, 0.2, 1 )
 
 [node name="Character" type="KinematicBody"]
@@ -22,7 +22,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8664, 0 )
 
 [node name="Arm" type="MeshInstance" parent="WeaponPoint"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.204101, -0.5 )
-mesh = SubResource( 3 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Pivot" type="Spatial" parent="."]
@@ -34,9 +34,6 @@ fov = 80.0
 
 [node name="dummy_character" parent="." instance=ExtResource( 2 )]
 transform = Transform( -0.179713, 0, 5.85578e-08, 0, 0.179713, 0, -5.85578e-08, 0, -0.179713, 0, -0.0119263, 0 )
-
-[node name="Skeleton" parent="dummy_character/Armature" index="0"]
-bones/9/bound_children = [  ]
 
 [node name="BoneAttachment" parent="dummy_character/Armature/Skeleton" index="0"]
 transform = Transform( 0.074826, 0.99513, 0.0641641, -0.997181, 0.0750308, -0.000783783, -0.00559426, -0.0639246, 0.997939, 7.63785, 13.053, -0.820823 )

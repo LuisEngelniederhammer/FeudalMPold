@@ -62,6 +62,10 @@
     <Reference Include="System.Memory" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="assets\predef\MenuHeader.cs" />
+    <Compile Include="assets\ui\DirectConnect\Button.cs" />
+    <Compile Include="assets\ui\EscapeMenu\EscapeMenu.cs" />
+    <Compile Include="assets\ui\MainMenu\MainMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\common\Main.cs" />
     <Compile Include="src\common\SceneService.cs" />
@@ -75,6 +79,9 @@
     <Compile Include="src\network\entity\NetworkMessageAction.cs" />
     <Compile Include="src\network\client\GameClient.cs" />
     <Compile Include="src\network\PacketDispatcher.cs" />
+    <Compile Include="src\network\server\GameServer.cs" />
+    <Compile Include="src\network\server\Server.cs" />
+    <Compile Include="assets\scenes\Character\Character.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

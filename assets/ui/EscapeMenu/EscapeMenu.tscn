@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/ui/EscapeMenu/EscapeMenu.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/EscapeMenu/EscapeMenu.cs" type="Script" id=1]
 [ext_resource path="res://assets/fonts/avara_dynamicfont.res" type="DynamicFont" id=2]
 [ext_resource path="res://assets/predef/MenuHeader.res" type="PackedScene" id=3]
 

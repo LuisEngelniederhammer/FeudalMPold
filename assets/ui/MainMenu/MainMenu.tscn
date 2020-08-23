@@ -1,12 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://assets/ui/MainMenu/Button.gd" type="Script" id=1]
-[ext_resource path="res://assets/ui/MainMenu/Create Server.gd" type="Script" id=2]
-[ext_resource path="res://assets/ui/MainMenu/Connect.gd" type="Script" id=3]
-[ext_resource path="res://assets/ui/MainMenu/Exit.gd" type="Script" id=4]
 [ext_resource path="res://assets/predef/MenuBackground.res" type="PackedScene" id=5]
 [ext_resource path="res://assets/fonts/avara_dynamicfont.res" type="DynamicFont" id=6]
-[ext_resource path="res://assets/ui/MainMenu/MainMenu.gd" type="Script" id=7]
+[ext_resource path="res://assets/ui/MainMenu/MainMenu.cs" type="Script" id=7]
 [ext_resource path="res://assets/predef/MenuHeader.res" type="PackedScene" id=8]
 
 [node name="Control" type="Control"]
@@ -40,13 +36,13 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Play" type="Button" parent="VBoxContainer/HBoxContainer"]
 margin_left = 484.0
 margin_right = 540.0
 margin_bottom = 30.0
 custom_fonts/font = ExtResource( 6 )
+disabled = true
 text = "Play"
-script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -63,7 +59,6 @@ margin_right = 580.0
 margin_bottom = 30.0
 custom_fonts/font = ExtResource( 6 )
 text = "Start Server"
-script = ExtResource( 2 )
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 302.0
@@ -77,7 +72,6 @@ margin_right = 594.0
 margin_bottom = 30.0
 custom_fonts/font = ExtResource( 6 )
 text = "Direct Connect"
-script = ExtResource( 3 )
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 336.0
@@ -91,8 +85,7 @@ margin_right = 538.0
 margin_bottom = 30.0
 custom_fonts/font = ExtResource( 6 )
 text = "Exit"
-script = ExtResource( 4 )
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="VBoxContainer/HBoxContainer/Button" method="_on_Button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Start Server" to="VBoxContainer/HBoxContainer2/Start Server" method="_on_Create_Server_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer3/Connect" to="VBoxContainer/HBoxContainer3/Connect" method="_on_Connect_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer4/Exit" to="VBoxContainer/HBoxContainer4/Exit" method="_on_Exit_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Play" to="." method="_on_Play_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Start Server" to="." method="_on_Start_Server_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer3/Connect" to="." method="_on_Connect_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer4/Exit" to="." method="_on_Exit_pressed"]

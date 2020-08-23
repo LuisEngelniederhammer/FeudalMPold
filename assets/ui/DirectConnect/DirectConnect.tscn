@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://assets/ui/DirectConnect/Button.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/DirectConnect/Button.cs" type="Script" id=1]
 [ext_resource path="res://assets/predef/MenuBackground.res" type="PackedScene" id=2]
 [ext_resource path="res://assets/fonts/avara_dynamicfont.res" type="DynamicFont" id=3]
 [ext_resource path="res://assets/predef/MenuHeader.res" type="PackedScene" id=4]
@@ -125,6 +125,5 @@ margin_right = 266.0
 margin_bottom = 178.0
 custom_fonts/font = ExtResource( 3 )
 text = "Back"
-script = ExtResource( 1 )
 [connection signal="pressed" from="HBoxContainer/CenterContainer/VBoxContainer/Button" to="HBoxContainer/CenterContainer/VBoxContainer/Button" method="_on_Button_pressed"]
-[connection signal="pressed" from="HBoxContainer/CenterContainer/VBoxContainer/Button2" to="HBoxContainer/CenterContainer/VBoxContainer/Button2" method="_on_Button2_pressed"]
+[connection signal="pressed" from="HBoxContainer/CenterContainer/VBoxContainer/Button2" to="HBoxContainer/CenterContainer/VBoxContainer/Button" method="_on_Button2_pressed"]
