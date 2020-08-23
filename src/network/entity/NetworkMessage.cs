@@ -5,8 +5,10 @@ namespace FeudalMP.Network.Entity
 {
 	abstract public class NetworkMessage
 	{
-		private NetworkMessageAction action;
-		private string data;
+		protected NetworkMessageAction action;
+		protected string data;
+		protected SceneTree Tree;
+	
 
 		protected NetworkMessage(NetworkMessageAction action, string data)
 		{
@@ -16,6 +18,7 @@ namespace FeudalMP.Network.Entity
 
 		protected NetworkMessage(SceneTree Tree, String server)
 		{
+			this.Tree = Tree;
 		}
 		public abstract byte[] getPacket();
 

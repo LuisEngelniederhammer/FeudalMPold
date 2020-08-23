@@ -1,8 +1,6 @@
 using Godot;
 using System;
 
-using Newtonsoft.Json;
-
 namespace FeudalMP.Network.Entity.NetworkMessages
 {
     public class ClientPositionUpdate : NetworkMessage

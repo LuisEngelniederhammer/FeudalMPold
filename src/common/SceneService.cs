@@ -40,7 +40,7 @@ namespace FeudalMP.Common
             return uiNodeTree;
         }
 
-        public void loadScene(string path)
+        public void LoadScene(string path)
         {
             PackedScene sceneResource = ResourceLoader.Load(String.Format("{0}/{1}", PATH_SCENES, path)) as PackedScene;
             Node sceneNodeTree = sceneResource.Instance();
