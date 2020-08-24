@@ -46,7 +46,7 @@ namespace FeudalMP.Network.Client
 
         private void RegisterClientCallbacks()
         {
-            dispatcher.RegisterCallback(NetworkMessageAction.SERVER_INITIAL_SYNC, new ServerInitialSync(Tree, "test"));
+            dispatcher.RegisterCallback(NetworkMessageAction.SERVER_INITIAL_SYNC, new ServerInitialSync(Tree, null));
         }
     }
 }

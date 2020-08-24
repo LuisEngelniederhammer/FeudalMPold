@@ -18,9 +18,9 @@ namespace FeudalMP.Network
 			return Tree.Multiplayer.SendBytes(packet, TargetPeerServer, transferMode);
 		}
 
-		public Error toServer(NetworkMessage message, TransferModeEnum transferMode = TransferModeEnum.Unreliable)
+		public Error toServer(AbstractNetworkMessage message, TransferModeEnum transferMode = TransferModeEnum.Unreliable)
 		{
-			return toServerRaw(JsonConvert.SerializeObject(message.getPacket()).ToUTF8(), transferMode);
+			return toServerRaw(JsonConvert.SerializeObject(message).ToUTF8(), transferMode);
 		}
 
 		public Error toClientRaw(int targetPeerId, byte[] packet, TransferModeEnum transferMode = TransferModeEnum.Unreliable)
@@ -28,9 +28,9 @@ namespace FeudalMP.Network
 			return Tree.Multiplayer.SendBytes(packet, targetPeerId, transferMode);
 		}
 
-		public Error toClient(int targetPeerId, NetworkMessage message, TransferModeEnum transferMode = TransferModeEnum.Unreliable)
+		public Error toClient(int targetPeerId, AbstractNetworkMessage message, TransferModeEnum transferMode = TransferModeEnum.Unreliable)
 		{
-			return toClientRaw(targetPeerId, JsonConvert.SerializeObject(message.getPacket()).ToUTF8(), transferMode);
+			return toClientRaw(targetPeerId, JsonConvert.SerializeObject(message).ToUTF8(), transferMode);
 		}
 	}
 }

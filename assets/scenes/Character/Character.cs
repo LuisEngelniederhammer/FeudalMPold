@@ -28,8 +28,7 @@ public class Character : KinematicBody
         networkService = new NetworkService(GetTree());
         pivot = GetNode("Pivot") as Spatial;
         head = GetNode("WeaponPoint") as Spatial;
-        characterAnimationPlayer = GetNode("dummy_character/AnimationPlayer") as AnimationPlayer;
-        escMenu = ((SceneService)GetNode("/root/SceneService")).AttachUI("EscapeMenu/EscapeMenu.tscn") as Control;
+        characterAnimationPlayer = GetNode("dummy_character/AnimationPlayer") as AnimationPlayer;        
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -43,6 +42,7 @@ public class Character : KinematicBody
             if (!escActive)
             {
                 Input.SetMouseMode(Input.MouseMode.Visible);
+                escMenu = ((SceneService)GetNode("/root/SceneService")).AttachUI("EscapeMenu/EscapeMenu.tscn") as Control;
                 escMenu.Show();
                 escActive = true;
             }
@@ -50,6 +50,7 @@ public class Character : KinematicBody
             {
                 Input.SetMouseMode(Input.MouseMode.Captured);
                 escMenu.Hide();
+                escMenu.Free();
                 escActive = false;
             }
         }
@@ -78,7 +79,7 @@ public class Character : KinematicBody
 
             if (Input.IsActionPressed("move_forward"))
             {
-                direction -= -Transform.basis.z;
+                direction -= Transform.basis.z;
                 if (!characterAnimationPlayer.IsPlaying())
                 {
                     characterAnimationPlayer.Play("Running");
@@ -91,7 +92,7 @@ public class Character : KinematicBody
             }
             if (Input.IsActionPressed("move_backward"))
             {
-                direction += -Transform.basis.z;
+                direction += Transform.basis.z;
                 if (!characterAnimationPlayer.IsPlaying())
                 {
                     characterAnimationPlayer.PlayBackwards("Running");
@@ -104,12 +105,12 @@ public class Character : KinematicBody
             }
             if (Input.IsActionPressed("move_left"))
             {
-                direction -= -Transform.basis.x;
+                direction -= Transform.basis.x;
                 moved = true;
             }
             if (Input.IsActionPressed("move_right"))
             {
-                direction += -Transform.basis.x;
+                direction += Transform.basis.x;
                 moved = true;
             }
             if (Input.IsActionPressed("jump") && IsOnFloor())
