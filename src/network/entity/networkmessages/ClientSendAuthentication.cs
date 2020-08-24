@@ -11,7 +11,7 @@ namespace FeudalMP.Network.Entity.NetworkMessages
     {
         private NetworkService networkService;
         public System.String SteamID64 { get; set; }
-        public ClientSendAuthentication() { }
+        public ClientSendAuthentication() : base(NetworkMessageAction.CLIENT_SEND_AUTHENTICATION){ }
         //Called by client
         public ClientSendAuthentication(string steamID64) : base(NetworkMessageAction.CLIENT_SEND_AUTHENTICATION)
         {

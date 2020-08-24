@@ -27,6 +27,7 @@ namespace FeudalMP.Network
             string rawJson = System.Text.Encoding.UTF8.GetString(packet);
             LOG.Info(String.Format("Received packet from {0}: {1}", id, rawJson));
             GenericNetworkMessage genericNetworkMessage = JsonConvert.DeserializeObject<GenericNetworkMessage>(rawJson);
+            LOG.Info(String.Format("{0}", genericNetworkMessage.Action));
             if (CallbackRegister.ContainsKey(genericNetworkMessage.Action))
             {
                 try

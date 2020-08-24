@@ -6,8 +6,8 @@ namespace FeudalMP.Network.Entity.NetworkMessages
 {
 	public class ClientAnimationStateUpdate : AbstractNetworkMessage
 	{
-		public ClientAnimationStateUpdate(){}
-		public ClientAnimationStateUpdate(string animationName, bool backwards) : base(NetworkMessageAction.CLIENT_POSITON_UPDATE)
+		public ClientAnimationStateUpdate(): base(NetworkMessageAction.CLIENT_ANIMATION_STATE_UPDATE){}
+		public ClientAnimationStateUpdate(string animationName, bool backwards) : base(NetworkMessageAction.CLIENT_ANIMATION_STATE_UPDATE)
 		{
 		}
 

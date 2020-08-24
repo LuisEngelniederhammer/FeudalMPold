@@ -83,6 +83,9 @@
     <Compile Include="assets\scenes\Character\Character.cs" />
     <Compile Include="src\network\server\entity\ClientRepresentation.cs" />
     <Compile Include="src\network\entity\networkmessages\GenericNetworkMessage.cs" />
+    <Compile Include="src\network\entity\networkmessages\ServerConnectedClientsSync.cs" />
+    <Compile Include="src\network\entity\networkmessages\ServerCompletedSync.cs" />
+    <Compile Include="src\network\entity\networkmessages\ClientPeerConnectionUpdate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
