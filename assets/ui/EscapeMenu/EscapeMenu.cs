@@ -1,16 +1,15 @@
 using FeudalMP.Common;
 using Godot;
-using System;
 
 public class EscapeMenu : Control
 {
-    private Button MainMenuButton;
+    private Godot.Button MainMenuButton;
     public override void _Ready()
     {
-        MainMenuButton = GetNode("HBoxContainer/VBoxContainer/MainMenu") as Button;
+        MainMenuButton = GetNode<Godot.Button>("HBoxContainer/VBoxContainer/MainMenu");
         if (GetTree().NetworkPeer != null)
         {
-            MainMenuButton.Text = "Disconnected";
+            MainMenuButton.Text = "Disconnect";
         }
     }
 
@@ -20,7 +19,7 @@ public class EscapeMenu : Control
         {
             GetTree().NetworkPeer = null;
         }
-        new SceneService(GetTree()).LoadScene("MainMenu/MainMenu.tscn");
+        ((SceneService)GetNode("/root/SceneService")).LoadUI("MainMenu/MainMenu.tscn");
     }
     public void _on_Exit_pressed()
     {

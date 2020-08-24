@@ -8,7 +8,6 @@ namespace FeudalMP.Network.Server
     public class GameServer : Object
     {
         private Logger LOG;
-        private string PlayerName;
         private SceneTree Tree;
         private PacketDispatcher dispatcher;
         private NetworkService networkService;

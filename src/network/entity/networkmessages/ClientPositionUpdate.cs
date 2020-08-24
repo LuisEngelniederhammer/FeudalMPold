@@ -5,7 +5,7 @@ namespace FeudalMP.Network.Entity.NetworkMessages
 {
     public class ClientPositionUpdate : NetworkMessage
     {
-        public ClientPositionUpdate(Vector3 translation, Vector3 rotation) : base(NetworkMessageAction.CLIENT_POSITON_UPDATE, "")
+        public ClientPositionUpdate(Vector3 translation, Vector3 rotation) : base(NetworkMessageAction.CLIENT_POSITON_UPDATE)
         {
         }
 
@@ -18,9 +18,5 @@ namespace FeudalMP.Network.Entity.NetworkMessages
             throw new NotImplementedException();
         }
 
-        public override byte[] GetPacket()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

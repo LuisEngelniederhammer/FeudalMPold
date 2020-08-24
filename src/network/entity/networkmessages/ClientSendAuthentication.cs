@@ -1,16 +1,15 @@
 using FeudalMP.Util;
 using Godot;
-using System;
 using static Godot.NetworkedMultiplayerPeer;
 
 namespace FeudalMP.Network.Entity.NetworkMessages
 {
     public class ClientSendAuthentication : NetworkMessage
     {
-        private string steamID64;
         private NetworkService networkService;
-        public ClientSendAuthentication(string data) : base(NetworkMessageAction.CLIENT_SEND_AUTHENTICATION, data)
+        public ClientSendAuthentication(string steamID64) : base(NetworkMessageAction.CLIENT_SEND_AUTHENTICATION)
         {
+            Data.Add("steamID64", steamID64);
         }
 
         public ClientSendAuthentication(SceneTree Tree, string server) : base(Tree, server)
@@ -23,12 +22,6 @@ namespace FeudalMP.Network.Entity.NetworkMessages
             Logger LOG = new Logger(this.GetType().Name);
             LOG.Info("Received callback");
             networkService.toClient(peerId, new ServerInitialSync("DevWorld/DevWorld.scn"), TransferModeEnum.Reliable);
-
-        }
-
-        public override byte[] GetPacket()
-        {
-            throw new NotImplementedException();
         }
     }
 }

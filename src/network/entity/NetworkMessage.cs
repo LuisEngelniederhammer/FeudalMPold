@@ -1,27 +1,37 @@
 using System;
 using Godot;
+using Godot.Collections;
 
 namespace FeudalMP.Network.Entity
 {
-    abstract public class NetworkMessage
+    public class NetworkMessage : Node
     {
-        public NetworkMessageAction Action { get; }
-        protected string data;
+        public NetworkMessageAction Action { get; set; }
+        public Dictionary Data { get; set; }
         protected SceneTree Tree;
 
-
-        protected NetworkMessage(NetworkMessageAction action, string data)
+        //this is Deprecated/only a default POCO Constructor
+        public NetworkMessage() { Data = new Dictionary(); }
+        protected NetworkMessage(NetworkMessageAction action)
         {
             this.Action = action;
-            this.data = data;
+            Data = new Dictionary();
         }
 
         protected NetworkMessage(SceneTree Tree, String server)
         {
             this.Tree = Tree;
         }
-        public abstract byte[] GetPacket();
 
-        public abstract void Callback(int peerId, NetworkMessage data);
+        public virtual void Callback(int peerId, NetworkMessage data) { }
+
+        public Godot.Collections.Dictionary getPacket()
+        {
+            Dictionary d = new Dictionary();
+            d.Add("Action", Action);
+            d.Add("Data", Data);
+            return d;
+
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -46,9 +46,8 @@
       <Version>1.0.0</Version>
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
-    <Reference Include="System.Text.Json">
-      <HintPath>/home/luis/.nuget/packages/system.text.json/4.7.2/lib/net461/System.Text.Json.dll</HintPath>
-      <Version>4.7.2</Version>
+    <Reference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
     </Reference>
     <Reference Include="GodotSharp">
       <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharp.dll</HintPath>

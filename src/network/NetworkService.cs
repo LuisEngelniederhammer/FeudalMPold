@@ -1,7 +1,7 @@
 using Godot;
-using System;
 using FeudalMP.Network.Entity;
 using static Godot.NetworkedMultiplayerPeer;
+using Newtonsoft.Json;
 
 namespace FeudalMP.Network
 {
@@ -20,7 +20,7 @@ namespace FeudalMP.Network
 
 		public Error toServer(NetworkMessage message, TransferModeEnum transferMode = TransferModeEnum.Unreliable)
 		{
-			return toServerRaw(message.GetPacket(), transferMode);
+			return toServerRaw(JsonConvert.SerializeObject(message.getPacket()).ToUTF8(), transferMode);
 		}
 
 		public Error toClientRaw(int targetPeerId, byte[] packet, TransferModeEnum transferMode = TransferModeEnum.Unreliable)
@@ -30,7 +30,7 @@ namespace FeudalMP.Network
 
 		public Error toClient(int targetPeerId, NetworkMessage message, TransferModeEnum transferMode = TransferModeEnum.Unreliable)
 		{
-			return toClientRaw(targetPeerId, message.GetPacket(), transferMode);
+			return toClientRaw(targetPeerId, JsonConvert.SerializeObject(message.getPacket()).ToUTF8(), transferMode);
 		}
 	}
 }

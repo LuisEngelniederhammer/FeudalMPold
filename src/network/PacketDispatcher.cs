@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using FeudalMP.Network.Entity;
 using FeudalMP.Util;
 using Godot;
+using Newtonsoft.Json;
 
 namespace FeudalMP.Network
 {
@@ -24,8 +24,8 @@ namespace FeudalMP.Network
         public void receive_network_peer_packet(int id, byte[] packet)
         {
             string rawJson = System.Text.Encoding.UTF8.GetString(packet);
-            NetworkMessage abstractNetworkMessage = JsonSerializer.Deserialize<NetworkMessage>(rawJson);
             LOG.Info(String.Format("Received packet from {0}: {1}", id, rawJson));
+            NetworkMessage abstractNetworkMessage = JsonConvert.DeserializeObject<NetworkMessage>(rawJson);
             if (CallbackRegister.ContainsKey(abstractNetworkMessage.Action))
             {
                 CallbackRegister[abstractNetworkMessage.Action].Callback(id, abstractNetworkMessage);

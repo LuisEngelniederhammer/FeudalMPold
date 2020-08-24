@@ -21,7 +21,7 @@ namespace FeudalMP.Network.Client
             LOG = new Logger(this.GetType().Name);
             this.Tree = Tree;
             dispatcher = new PacketDispatcher(Tree);
-
+            RegisterClientCallbacks();
             ENetInstance = new NetworkedMultiplayerENet();
             ENetInstance.CreateClient(ip, port);
             Tree.NetworkPeer = ENetInstance;
@@ -32,7 +32,7 @@ namespace FeudalMP.Network.Client
             ENetInstance.Connect("connection_succeeded", this, "receive_connection_succeeded");
 
             PlayerName = name;
-            RegisterClientCallbacks();
+
         }
         public void receive_connection_failed()
         {

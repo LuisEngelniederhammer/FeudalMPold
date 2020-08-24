@@ -19,6 +19,10 @@ config/name="FeudalMP"
 run/main_scene="res://src/common/Main.res"
 config/icon="res://icon.png"
 
+[autoload]
+
+SceneService="*res://src/common/SceneService.cs"
+
 [debug]
 
 gdscript/completion/autocomplete_setters_and_getters=true

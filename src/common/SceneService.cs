@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 namespace FeudalMP.Common
 {
@@ -9,47 +8,62 @@ namespace FeudalMP.Common
         public const string PATH_UI = "res://assets/ui";
         public const string NODE_PATH_BASE = "/root/FeudalMP";
         public const string NODE_PATH_SCENE = NODE_PATH_BASE + "/Scene";
-        private SceneTree Tree;
-        public SceneService(SceneTree Tree)
+        public const string NODE_PATH_UI = NODE_PATH_BASE + "/UI";
+        public Node BaseScene { get; set; }
+        public Node BaseUI { get; set; }
+        public override void _Ready()
         {
-            this.Tree = Tree;
+            BaseScene = GetTree().Root.GetNode(NODE_PATH_SCENE);
+            BaseUI = GetTree().Root.GetNode(NODE_PATH_UI);
         }
-
-        public Node GetScene()
+        private void ClearBaseUI()
         {
-            return Tree.Root.GetNode(NODE_PATH_SCENE);
+            BaseUI.Free();
+            Node n = new Node();
+            n.Name = "UI";
+            GetTree().Root.GetNode(NODE_PATH_BASE).AddChild(n);
+            BaseUI = GetTree().Root.GetNode(NODE_PATH_UI);
         }
-
+        private void ClearBaseScene()
+        {
+            BaseScene.Free();
+            Node n = new Node();
+            n.Name = "Scene";
+            GetTree().Root.GetNode(NODE_PATH_BASE).AddChild(n);
+            BaseScene = GetTree().Root.GetNode(NODE_PATH_SCENE);
+        }
         public void LoadUI(string path)
         {
-            PackedScene uiResource = ResourceLoader.Load(String.Format("{0}/{1}", PATH_UI, path)) as PackedScene;
-            Node uiNodeTree = uiResource.Instance();
-            foreach (Node child in GetScene().GetChildren())
-            {
-                GetScene().RemoveChild(child);
-                child.QueueFree();
-            }
-            GetScene().AddChild(uiNodeTree);
+            CallDeferred(nameof(LoadUIDeferred), System.String.Format("{0}/{1}", PATH_UI, path));
         }
-
+        private void LoadUIDeferred(string path)
+        {
+            ClearBaseUI();
+            ClearBaseScene();
+            PackedScene uiResource = ResourceLoader.Load(path) as PackedScene;
+            Node uiNodeTree = uiResource.Instance();
+            BaseUI.AddChild(uiNodeTree);
+        }
         public Node AttachUI(string path)
         {
-            PackedScene uiResource = ResourceLoader.Load(String.Format("{0}/{1}", PATH_UI, path)) as PackedScene;
+            PackedScene uiResource = GD.Load(System.String.Format("{0}/{1}", PATH_UI, path)) as PackedScene;
             Node uiNodeTree = uiResource.Instance();
-            GetScene().AddChild(uiNodeTree);
+            BaseUI.AddChild(uiNodeTree);
             return uiNodeTree;
         }
 
         public void LoadScene(string path)
         {
-            PackedScene sceneResource = ResourceLoader.Load(String.Format("{0}/{1}", PATH_SCENES, path)) as PackedScene;
+            CallDeferred(nameof(LoadSceneDeferred), System.String.Format("{0}/{1}", PATH_SCENES, path));
+        }
+        public void LoadSceneDeferred(string path)
+        {
+            ClearBaseUI();
+            ClearBaseScene();
+            PackedScene sceneResource = ResourceLoader.Load(path) as PackedScene;
             Node sceneNodeTree = sceneResource.Instance();
-            foreach (Node child in GetScene().GetChildren())
-            {
-                GetScene().RemoveChild(child);
-                child.QueueFree();
-            }
-            GetScene().AddChild(sceneNodeTree);
+            BaseScene.AddChild(sceneNodeTree);
+            GetTree().CurrentScene = GetNode(NODE_PATH_BASE);
         }
     }
 }

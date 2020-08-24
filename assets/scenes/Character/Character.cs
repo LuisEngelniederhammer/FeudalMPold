@@ -29,6 +29,7 @@ public class Character : KinematicBody
         pivot = GetNode("Pivot") as Spatial;
         head = GetNode("WeaponPoint") as Spatial;
         characterAnimationPlayer = GetNode("dummy_character/AnimationPlayer") as AnimationPlayer;
+        escMenu = ((SceneService)GetNode("/root/SceneService")).AttachUI("EscapeMenu/EscapeMenu.tscn") as Control;
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -37,12 +38,11 @@ public class Character : KinematicBody
         {
             return;
         }
-        if (@event.IsActionPressed("ui_cancle"))
+        if (@event.IsActionPressed("ui_cancel"))
         {
             if (!escActive)
             {
                 Input.SetMouseMode(Input.MouseMode.Visible);
-                escMenu = new SceneService(GetTree()).AttachUI("EscapeMenu/EscapeMenu.tscn") as Control;
                 escMenu.Show();
                 escActive = true;
             }
@@ -50,7 +50,6 @@ public class Character : KinematicBody
             {
                 Input.SetMouseMode(Input.MouseMode.Captured);
                 escMenu.Hide();
-                escMenu.QueueFree();
                 escActive = false;
             }
         }
@@ -59,10 +58,11 @@ public class Character : KinematicBody
             RotateY(Mathf.Deg2Rad(-((InputEventMouseMotion)@event).Relative.x * mouseSensitivity));
             pivot.RotateX(Mathf.Deg2Rad(-((InputEventMouseMotion)@event).Relative.y * mouseSensitivity));
             //@TODO whats happening here ??? check RotateX method vs. direct assignment to x Attribute
-            pivot.RotateX(Mathf.Clamp(pivot.Rotation.x, Mathf.Deg2Rad(-90), Mathf.Deg2Rad(50)));
+            pivot.Rotation = new Vector3(Mathf.Clamp(pivot.Rotation.x, Mathf.Deg2Rad(-90), Mathf.Deg2Rad(50)), pivot.Rotation.y, pivot.Rotation.z);
 
             head.RotateX(Mathf.Deg2Rad(-((InputEventMouseMotion)@event).Relative.y * mouseSensitivity));
-            head.RotateX(Mathf.Clamp(head.Rotation.x, Mathf.Deg2Rad(-50), Mathf.Deg2Rad(30)));
+            float xClamped = Mathf.Clamp(head.Rotation.x, Mathf.Deg2Rad(-50), Mathf.Deg2Rad(30));
+            head.Rotation = new Vector3(xClamped, head.Rotation.y, head.Rotation.z);
             if (GetTree().NetworkPeer != null)
             {
                 networkService.toServer(new ClientPositionUpdate(Translation, Rotation));
@@ -89,7 +89,7 @@ public class Character : KinematicBody
                     moved = true;
                 }
             }
-            if (Input.IsActionPressed("move_backwards"))
+            if (Input.IsActionPressed("move_backward"))
             {
                 direction += -Transform.basis.z;
                 if (!characterAnimationPlayer.IsPlaying())

@@ -21,6 +21,6 @@ public class Button : Godot.Button
     }
 
     public void _on_Button2_pressed(){
-        new SceneService(GetTree()).LoadUI("MainMenu/MainMenu.tscn");
+        ((SceneService)GetNode("/root/SceneService")).LoadUI("MainMenu/MainMenu.tscn");
     }
 }
