@@ -1,5 +1,10 @@
+using FeudalMP;
 using FeudalMP.Common;
+using FeudalMP.Network;
+using FeudalMP.Network.Entity.NetworkMessages;
+using FeudalMP.Network.Server.Entity;
 using Godot;
+using static Godot.NetworkedMultiplayerPeer;
 
 public class EscapeMenu : Control
 {
@@ -15,6 +20,8 @@ public class EscapeMenu : Control
 
     public void _on_MainMenu_pressed()
     {
+        ObjectBroker.Instance.NetworkService.toServer(new ClientPeerConnectionUpdate(new ClientRepresentation(GetTree().GetNetworkUniqueId(), new Vector3(), new Vector3()), true), TransferModeEnum.Reliable);
+
         if (GetTree().NetworkPeer != null)
         {
             GetTree().NetworkPeer = null;

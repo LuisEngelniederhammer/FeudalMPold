@@ -10,14 +10,12 @@ namespace FeudalMP.Network.Entity.NetworkMessages
 {
     public class ServerConnetedClientsSync : AbstractNetworkMessage
     {
-        private NetworkService networkService;
         public Dictionary<int, Vector3> ConnectedClients { get; set; }
         private Logger LOG;
         public ServerConnetedClientsSync() : base(NetworkMessageAction.SERVER_CONNECTED_CLIENTS_SYNC) { }
 
         public ServerConnetedClientsSync(SceneTree Tree, GameServer Server) : base(Tree, Server)
         {
-            networkService = new NetworkService(Tree);
             LOG = new Logger(this.GetType().Name);
         }
 
@@ -34,7 +32,7 @@ namespace FeudalMP.Network.Entity.NetworkMessages
                     }
                 }
                 this.Action = NetworkMessageAction.SERVER_CONNECTED_CLIENTS_SYNC;
-                networkService.toClient(peerId, this, TransferModeEnum.Reliable);
+                ObjectBroker.Instance.NetworkService.toClient(peerId, this, TransferModeEnum.Reliable);
             }
             else
             {
@@ -53,7 +51,7 @@ namespace FeudalMP.Network.Entity.NetworkMessages
                     peerRepresentation.Translation = entry.Value;
                     Tree.Root.GetNode(SceneService.NODE_PATH_SCENE).AddChild(peerRepresentation);
                 }
-                networkService.toServer(new ServerCompletedSync(),TransferModeEnum.Reliable);
+                ObjectBroker.Instance.NetworkService.toServer(new ServerCompletedSync(),TransferModeEnum.Reliable);
             }
         }
 

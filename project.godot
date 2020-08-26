@@ -41,6 +41,8 @@ server/map_name="Test Scene"
 server/map_filename="DevWorld/DevWorld.scn"
 server/host="127.0.0.1"
 application/version="0.3.3"
+application/sdlc_state=1
+application/debug=1
 
 [input]
 

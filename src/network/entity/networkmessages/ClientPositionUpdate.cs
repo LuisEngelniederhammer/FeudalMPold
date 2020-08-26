@@ -9,7 +9,6 @@ namespace FeudalMP.Network.Entity.NetworkMessages
 {
     public class ClientPositionUpdate : AbstractNetworkMessage
     {
-        private NetworkService networkService;
         private Logger LOG;
 
         public Vector3 Translation { get; set; }
@@ -28,7 +27,6 @@ namespace FeudalMP.Network.Entity.NetworkMessages
         public ClientPositionUpdate(SceneTree Tree, GameServer Server) : base(Tree, Server)
         {
             LOG = new Logger(this.GetType().Name);
-            networkService = new NetworkService(Tree);
         }
 
         public override void Callback(int peerId, AbstractNetworkMessage abstractNetworkMessage)
@@ -49,7 +47,7 @@ namespace FeudalMP.Network.Entity.NetworkMessages
                     {
                         ClientPositionUpdate updateClients = new ClientPositionUpdate();
                         updateClients.ClientRepresentation = new ClientRepresentation(peerId, Server.ConnectedClients[peerId].Translation, Server.ConnectedClients[peerId].Rotation);
-                        networkService.toClient(peer, updateClients);
+                        ObjectBroker.Instance.NetworkService.toClient(peer, updateClients);
                     }
                 }
             }

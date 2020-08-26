@@ -11,7 +11,6 @@ namespace FeudalMP.Network.Server
         private Logger LOG;
         private SceneTree Tree;
         private PacketDispatcher dispatcher;
-        private NetworkService networkService;
         private NetworkedMultiplayerENet ENetInstance;
         public System.Collections.Generic.Dictionary<int, ClientRepresentation> ConnectedClients { get; set; }
         public GameServer(SceneTree Tree, int port)
@@ -26,8 +25,6 @@ namespace FeudalMP.Network.Server
             Tree.NetworkPeer = ENetInstance;
             LOG.Info("Server started on port " + port);
 
-            networkService = new NetworkService(Tree);
-
             ENetInstance.Connect("peer_connected", this, "receive_peer_connected");
             ENetInstance.Connect("peer_disconnected", this, "receive_peer_disconnected");
             RegisterClientCallbacks();
@@ -39,15 +36,23 @@ namespace FeudalMP.Network.Server
         }
         public void receive_peer_disconnected(int id)
         {
-            LOG.Info("Client disconnected id=" + id);
-            foreach (var entry in ConnectedClients)
+            if (ConnectedClients.ContainsKey(id))
             {
-                if (entry.Key != id)
+                LOG.Info("Client disconnected id=" + id);
+                RemoveClient(id);
+                foreach (var entry in ConnectedClients)
                 {
-                    networkService.toClient(entry.Key, new ClientPeerConnectionUpdate(new ClientRepresentation(id, new Vector3(), new Vector3()), true));
+                    if (entry.Key != id)
+                    {
+                        ObjectBroker.Instance.NetworkService.toClient(entry.Key, new ClientPeerConnectionUpdate(new ClientRepresentation(id, new Vector3(), new Vector3()), true));
+                    }
                 }
             }
-            RemoveClient(id);
+            else
+            {
+                LOG.Warn("Received peer disconnected signal from non registered client " + GD.Str(id));
+            }
+
         }
         private void RegisterClientCallbacks()
         {
@@ -56,6 +61,7 @@ namespace FeudalMP.Network.Server
             dispatcher.RegisterCallback(NetworkMessageAction.CLIENT_POSITON_UPDATE, new ClientPositionUpdate(Tree, this));
             dispatcher.RegisterCallback(NetworkMessageAction.SERVER_CONNECTED_CLIENTS_SYNC, new ServerConnetedClientsSync(Tree, this));
             dispatcher.RegisterCallback(NetworkMessageAction.SERVER_COMPLETED_SYNC, new ServerCompletedSync(Tree, this));
+            dispatcher.RegisterCallback(NetworkMessageAction.CLIENT_PEER_CONNECTION_UPDATE, new ClientPeerConnectionUpdate(Tree, this));
         }
 
         public void AddClient(ClientRepresentation client)
@@ -63,7 +69,7 @@ namespace FeudalMP.Network.Server
             ConnectedClients.Add(client.Id, client);
         }
 
-        private void RemoveClient(int id)
+        public void RemoveClient(int id)
         {
             ConnectedClients.Remove(id);
         }

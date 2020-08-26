@@ -6,9 +6,9 @@ public class MainMenu : Control
 {
 	public override void _Ready()
 	{
-
 	}
-	public void _on_Play_pressed() {
+	public void _on_Play_pressed()
+	{
 		((SceneService)GetNode("/root/SceneService")).LoadUI("MapSelection/MapSelection.tscn");
 	}
 

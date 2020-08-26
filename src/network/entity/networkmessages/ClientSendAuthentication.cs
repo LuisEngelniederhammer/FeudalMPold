@@ -9,7 +9,6 @@ namespace FeudalMP.Network.Entity.NetworkMessages
 {
     public class ClientSendAuthentication : AbstractNetworkMessage
     {
-        private NetworkService networkService;
         public System.String SteamID64 { get; set; }
         public ClientSendAuthentication() : base(NetworkMessageAction.CLIENT_SEND_AUTHENTICATION){ }
         //Called by client
@@ -21,7 +20,6 @@ namespace FeudalMP.Network.Entity.NetworkMessages
         //Registering on the server side CallbackRegister of the PacketDispatcher
         public ClientSendAuthentication(SceneTree Tree, GameServer Server) : base(Tree, Server)
         {
-            networkService = new NetworkService(Tree);
         }
 
         //Called when received by server
@@ -34,7 +32,7 @@ namespace FeudalMP.Network.Entity.NetworkMessages
             ClientRepresentation newClient = new ClientRepresentation(peerId, new Vector3(), new Vector3());
             newClient.Name = clientSendAuthentication.SteamID64;
             Server.AddClient(newClient);
-            networkService.toClient(peerId, new ServerInitialSync("DevWorld/DevWorld.scn"), TransferModeEnum.Reliable);
+            ObjectBroker.Instance.NetworkService.toClient(peerId, new ServerInitialSync("DevWorld/DevWorld.scn"), TransferModeEnum.Reliable);
         }
 
         public override AbstractNetworkMessage Convert(string rawJson)

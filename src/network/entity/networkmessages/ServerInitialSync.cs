@@ -10,7 +10,6 @@ namespace FeudalMP.Network.Entity.NetworkMessages
 {
     public class ServerInitialSync : AbstractNetworkMessage
     {
-        private NetworkService networkService;
         public String MapFilePath { get; set; }
         public ServerInitialSync() : base(NetworkMessageAction.SERVER_INITIAL_SYNC) { }
         public ServerInitialSync(String MapFilePath) : base(NetworkMessageAction.SERVER_INITIAL_SYNC)
@@ -20,7 +19,6 @@ namespace FeudalMP.Network.Entity.NetworkMessages
 
         public ServerInitialSync(SceneTree Tree, GameServer Server) : base(Tree, Server)
         {
-            networkService = new NetworkService(Tree);
         }
 
         public override void Callback(int peerId, AbstractNetworkMessage abstractNetworkMessage)
@@ -36,7 +34,7 @@ namespace FeudalMP.Network.Entity.NetworkMessages
             charNode.Name = GD.Str(Tree.GetNetworkUniqueId());
             charNode.SetNetworkMaster(Tree.GetNetworkUniqueId());
             Tree.Root.GetNode(SceneService.NODE_PATH_SCENE).AddChild(charNode);
-            networkService.toServer(new ServerConnetedClientsSync());
+            ObjectBroker.Instance.NetworkService.toServer(new ServerConnetedClientsSync());
         }
 
         public override AbstractNetworkMessage Convert(string rawJson)

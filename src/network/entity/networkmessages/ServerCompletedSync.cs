@@ -2,12 +2,14 @@ using Godot;
 using FeudalMP.Network.Server;
 using Newtonsoft.Json;
 using FeudalMP.Network.Server.Entity;
+using static Godot.NetworkedMultiplayerPeer;
+using FeudalMP.Util;
 
 namespace FeudalMP.Network.Entity.NetworkMessages
 {
     public class ServerCompletedSync : AbstractNetworkMessage
     {
-        private NetworkService networkService;
+        private Logger logger;
         public ServerCompletedSync() : base(NetworkMessageAction.SERVER_COMPLETED_SYNC)
         {
 
@@ -15,7 +17,7 @@ namespace FeudalMP.Network.Entity.NetworkMessages
 
         public ServerCompletedSync(SceneTree Tree, GameServer Server) : base(Tree, Server)
         {
-            networkService = new NetworkService(Tree);
+            logger = new Logger(this.GetType().Name);
         }
 
         public override void Callback(int peerId, AbstractNetworkMessage abstractNetworkMessage)
@@ -23,11 +25,13 @@ namespace FeudalMP.Network.Entity.NetworkMessages
             if (Tree.IsNetworkServer())
             {
                 Server.ConnectedClients[peerId].ClientState = ClientState.READY;
+                logger.Info("there are " + GD.Str(Server.ConnectedClients.Count) + " connected clients, the will all updated with " + GD.Str(peerId));
                 foreach (var peer in Server.ConnectedClients)
                 {
                     if (peer.Key != peerId)
                     {
-                        networkService.toClient(peer.Key, new ClientPeerConnectionUpdate(Server.ConnectedClients[peerId]));
+                        
+                        ObjectBroker.Instance.NetworkService.toClient(peer.Key, new ClientPeerConnectionUpdate(Server.ConnectedClients[peerId]), TransferModeEnum.Reliable);
                     }
                 }
             }

@@ -58,9 +58,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Memory" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="assets\hud\DebugHUD\DebugHUD.cs" />
+    <Compile Include="assets\hud\DebugHUD\SDLC_State.cs" />
+    <Compile Include="assets\predef\BillboardText.cs" />
     <Compile Include="assets\predef\MenuHeader.cs" />
     <Compile Include="assets\ui\DirectConnect\Button.cs" />
     <Compile Include="assets\ui\EscapeMenu\EscapeMenu.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="src\network\entity\networkmessages\ServerConnectedClientsSync.cs" />
     <Compile Include="src\network\entity\networkmessages\ServerCompletedSync.cs" />
     <Compile Include="src\network\entity\networkmessages\ClientPeerConnectionUpdate.cs" />
+    <Compile Include="src\common\ObjectBroker.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

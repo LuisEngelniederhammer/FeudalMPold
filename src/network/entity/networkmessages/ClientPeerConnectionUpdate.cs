@@ -23,30 +23,52 @@ namespace FeudalMP.Network.Entity.NetworkMessages
 
         public ClientPeerConnectionUpdate(SceneTree Tree, GameServer Server) : base(Tree, Server)
         {
-            networkService = new NetworkService(Tree);
         }
 
         public override void Callback(int peerId, AbstractNetworkMessage abstractNetworkMessage)
         {
+            ClientPeerConnectionUpdate clientPeerConnectionUpdate = abstractNetworkMessage as ClientPeerConnectionUpdate;
             if (Tree.IsNetworkServer())
             {
+                if (clientPeerConnectionUpdate.Disconnected)
+                {
+                    ClientRepresentation disconnectedPeer = Server.ConnectedClients[peerId];
+                    Server.RemoveClient(peerId);
+                    foreach (var peer in Server.ConnectedClients)
+                    {
+                        if (peer.Key != peerId)
+                        {
+                            networkService.toClient(peer.Key, new ClientPeerConnectionUpdate(disconnectedPeer, true));
+                        }
+                    }
+                }
             }
             else
             {
-                ClientPeerConnectionUpdate clientPeerConnectionUpdate = abstractNetworkMessage as ClientPeerConnectionUpdate;
-                if (!Disconnected)
+                if (!clientPeerConnectionUpdate.Disconnected)
                 {
+                    if (Tree.Root.GetNode(SceneService.NODE_PATH_SCENE).HasNode(GD.Str(clientPeerConnectionUpdate.ClientRepresentation.Id)))
+                    {
+                        return;
+                    }
+
                     PackedScene peerRepresentationResource = ResourceLoader.Load("res://assets/scenes/Character/Character.tscn") as PackedScene;
                     Godot.KinematicBody peerRepresentation = peerRepresentationResource.Instance() as Godot.KinematicBody;
                     peerRepresentation.Name = GD.Str(clientPeerConnectionUpdate.ClientRepresentation.Id);
                     peerRepresentation.SetNetworkMaster(clientPeerConnectionUpdate.ClientRepresentation.Id);
                     peerRepresentation.Translation = clientPeerConnectionUpdate.ClientRepresentation.Translation;
                     peerRepresentation.Rotation = clientPeerConnectionUpdate.ClientRepresentation.Rotation;
+
+                    Node peerName = peerRepresentation.GetNode("Name");
+                    ((Label)peerName.GetNode("Viewport/Label")).Text = clientPeerConnectionUpdate.ClientRepresentation.Name;
+
                     Tree.Root.GetNode(SceneService.NODE_PATH_SCENE).AddChild(peerRepresentation);
                 }
                 else
                 {
-                    Tree.Root.GetNode(SceneService.NODE_PATH_SCENE).GetNode(GD.Str(clientPeerConnectionUpdate.ClientRepresentation.Id)).QueueFree();
+                    Node peerNode = Tree.Root.GetNode(SceneService.NODE_PATH_SCENE).GetNode(GD.Str(clientPeerConnectionUpdate.ClientRepresentation.Id));
+                    Tree.Root.GetNode(SceneService.NODE_PATH_SCENE).RemoveChild(peerNode);
+                    peerNode.QueueFree();
                 }
             }
         }

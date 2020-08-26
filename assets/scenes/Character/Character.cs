@@ -1,3 +1,4 @@
+using FeudalMP;
 using FeudalMP.Common;
 using FeudalMP.Network;
 using FeudalMP.Network.Entity.NetworkMessages;
@@ -5,7 +6,6 @@ using Godot;
 
 public class Character : KinematicBody
 {
-	private NetworkService networkService;
 	private int speed = 10;
 	private int acceleration = 10;
 
@@ -25,10 +25,9 @@ public class Character : KinematicBody
 	public override void _Ready()
 	{
 		Input.SetMouseMode(Input.MouseMode.Captured);
-		networkService = new NetworkService(GetTree());
 		pivot = GetNode("Pivot") as Spatial;
 		head = GetNode("WeaponPoint") as Spatial;
-		characterAnimationPlayer = GetNode("dummy_character/AnimationPlayer") as AnimationPlayer;        
+		characterAnimationPlayer = GetNode("dummy_character/AnimationPlayer") as AnimationPlayer;
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -66,7 +65,7 @@ public class Character : KinematicBody
 			head.Rotation = new Vector3(xClamped, head.Rotation.y, head.Rotation.z);
 			if (GetTree().NetworkPeer != null)
 			{
-				networkService.toServer(new ClientPositionUpdate(Translation, Rotation));
+				ObjectBroker.Instance.NetworkService.toServer(new ClientPositionUpdate(Translation, Rotation));
 			}
 		}
 	}
@@ -85,7 +84,7 @@ public class Character : KinematicBody
 					characterAnimationPlayer.Play("Running");
 					if (GetTree().NetworkPeer != null)
 					{
-						networkService.toServer(new ClientAnimationStateUpdate("Running", false));
+						ObjectBroker.Instance.NetworkService.toServer(new ClientAnimationStateUpdate("Running", false));
 					}
 					moved = true;
 				}
@@ -98,7 +97,7 @@ public class Character : KinematicBody
 					characterAnimationPlayer.PlayBackwards("Running");
 					if (GetTree().NetworkPeer != null)
 					{
-						networkService.toServer(new ClientAnimationStateUpdate("Running", true));
+						ObjectBroker.Instance.NetworkService.toServer(new ClientAnimationStateUpdate("Running", true));
 					}
 					moved = true;
 				}
@@ -134,7 +133,7 @@ public class Character : KinematicBody
 			velocity = MoveAndSlide(velocity, Vector3.Up, true);
 			if (GetTree().NetworkPeer != null && (moved || (velocity.Length() > 0)))
 			{
-				networkService.toServer(new ClientPositionUpdate(Translation, Rotation));
+				ObjectBroker.Instance.NetworkService.toServer(new ClientPositionUpdate(Translation, Rotation));
 			}
 
 		}

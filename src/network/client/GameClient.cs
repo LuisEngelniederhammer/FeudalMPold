@@ -13,7 +13,6 @@ namespace FeudalMP.Network.Client
         private string PlayerName;
         private SceneTree Tree;
         private PacketDispatcher dispatcher;
-        private NetworkService networkService;
         private NetworkedMultiplayerENet ENetInstance;
 
         public GameClient(SceneTree Tree, string ip, int port, string name)
@@ -25,8 +24,6 @@ namespace FeudalMP.Network.Client
             ENetInstance = new NetworkedMultiplayerENet();
             ENetInstance.CreateClient(ip, port);
             Tree.NetworkPeer = ENetInstance;
-
-            networkService = new NetworkService(Tree);
 
             ENetInstance.Connect("connection_failed", this, "receive_connection_failed");
             ENetInstance.Connect("connection_succeeded", this, "receive_connection_succeeded");
@@ -41,7 +38,7 @@ namespace FeudalMP.Network.Client
         public void receive_connection_succeeded()
         {
             LOG.Info("Successfully connected to server");
-            networkService.toServer(new ClientSendAuthentication(PlayerName), TransferModeEnum.Reliable);
+            ObjectBroker.Instance.NetworkService.toServer(new ClientSendAuthentication(PlayerName), TransferModeEnum.Reliable);
         }
 
         private void RegisterClientCallbacks()
