@@ -1,3 +1,4 @@
+using FeudalMP.Common;
 using FeudalMP.Network;
 using FeudalMP.Util;
 
@@ -19,6 +20,20 @@ namespace FeudalMP
                     throw new System.AccessViolationException("Not allowed to overwrite already initialized NetworkService within ObjectBroker");
                 }
                 _NetworkService = value;
+            }
+        }
+
+        private SceneService _SceneService;
+        public SceneService SceneService
+        {
+            get { return _SceneService; }
+            set
+            {
+                if (_SceneService != null)
+                {
+                    throw new System.AccessViolationException("Not allowed to overwrite already initialized NetworkService within ObjectBroker");
+                }
+                _SceneService = value;
             }
         }
 

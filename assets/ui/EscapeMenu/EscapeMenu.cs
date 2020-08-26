@@ -26,7 +26,7 @@ public class EscapeMenu : Control
         {
             GetTree().NetworkPeer = null;
         }
-        ((SceneService)GetNode("/root/SceneService")).LoadUI("MainMenu/MainMenu.tscn");
+        FeudalMP.ObjectBroker.Instance.SceneService.LoadUI("MainMenu/MainMenu.tscn");
     }
     public void _on_Exit_pressed()
     {

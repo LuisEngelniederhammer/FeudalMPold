@@ -62,6 +62,7 @@ namespace FeudalMP.Network.Server
             dispatcher.RegisterCallback(NetworkMessageAction.SERVER_CONNECTED_CLIENTS_SYNC, new ServerConnetedClientsSync(Tree, this));
             dispatcher.RegisterCallback(NetworkMessageAction.SERVER_COMPLETED_SYNC, new ServerCompletedSync(Tree, this));
             dispatcher.RegisterCallback(NetworkMessageAction.CLIENT_PEER_CONNECTION_UPDATE, new ClientPeerConnectionUpdate(Tree, this));
+            dispatcher.RegisterCallback(NetworkMessageAction.CHAT_MESSAGE, new ChatMessage(Tree, this));
         }
 
         public void AddClient(ClientRepresentation client)
