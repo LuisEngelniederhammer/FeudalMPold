@@ -21,6 +21,6 @@ public class Button : Godot.Button
     }
 
     public void _on_Button2_pressed(){
-        ((SceneService)GetNode("/root/SceneService")).LoadUI("MainMenu/MainMenu.tscn");
+        FeudalMP.ObjectBroker.Instance.SceneService.LoadUI("MainMenu/MainMenu.tscn");
     }
 }

@@ -26,8 +26,9 @@ namespace FeudalMP.Network.Entity.NetworkMessages
             ServerInitialSync s = abstractNetworkMessage as ServerInitialSync;
             Logger log = new Logger(this.GetType().Name);
             log.Info("new ServerInitialSync package received from server");
-            SceneService sceneService = ((SceneService)Tree.Root.GetNode("/root/SceneService"));
-            sceneService.LoadSceneDeferred("res://assets/scenes/" + s.MapFilePath);
+            FeudalMP.ObjectBroker.Instance.SceneService.LoadSceneDeferred("res://assets/scenes/" + s.MapFilePath);
+
+            FeudalMP.ObjectBroker.Instance.SceneService.AttachUI("ChatWindow/ChatWindow.tscn");
 
             PackedScene charResource = ResourceLoader.Load("res://assets/scenes/Character/Character.tscn") as PackedScene;
             Node charNode = charResource.Instance();

@@ -12,12 +12,12 @@ namespace FeudalMP.Network.Entity
 
         //this is Deprecated/only a default POCO Constructor
         public AbstractNetworkMessage() { }
-        protected AbstractNetworkMessage(NetworkMessageAction action)
+        public AbstractNetworkMessage(NetworkMessageAction action)
         {
             this.Action = action;
         }
 
-        protected AbstractNetworkMessage(SceneTree Tree, GameServer Server)
+        public AbstractNetworkMessage(SceneTree Tree, GameServer Server)
         {
             this.Tree = Tree;
             this.Server = Server;

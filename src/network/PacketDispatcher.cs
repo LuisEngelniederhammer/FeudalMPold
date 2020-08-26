@@ -25,7 +25,7 @@ namespace FeudalMP.Network
         public void receive_network_peer_packet(int id, byte[] packet)
         {
             string rawJson = System.Text.Encoding.UTF8.GetString(packet);
-            LOG.Info(String.Format("Received packet from {0}: {1}", id, rawJson));
+            //LOG.Info(String.Format("Received packet from {0}: {1}", id, rawJson));
             GenericNetworkMessage genericNetworkMessage = JsonConvert.DeserializeObject<GenericNetworkMessage>(rawJson);
             LOG.Info(String.Format("{0}", genericNetworkMessage.Action));
             if (CallbackRegister.ContainsKey(genericNetworkMessage.Action))
@@ -36,7 +36,7 @@ namespace FeudalMP.Network
                 }
                 catch (Exception e)
                 {
-                    LOG.Warn(String.Format("Callback on {0} resulted in error {1}", genericNetworkMessage.Action, e.Message));
+                    LOG.Warn(String.Format("Callback on {0} resulted in error:\n{1}", genericNetworkMessage.Action, e.Message));
                 }
             }
             else

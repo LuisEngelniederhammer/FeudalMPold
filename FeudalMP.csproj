@@ -64,6 +64,7 @@
     <Compile Include="assets\hud\DebugHUD\SDLC_State.cs" />
     <Compile Include="assets\predef\BillboardText.cs" />
     <Compile Include="assets\predef\MenuHeader.cs" />
+    <Compile Include="assets\ui\ChatWindow\ChatWindow.cs" />
     <Compile Include="assets\ui\DirectConnect\Button.cs" />
     <Compile Include="assets\ui\EscapeMenu\EscapeMenu.cs" />
     <Compile Include="assets\ui\MainMenu\MainMenu.cs" />
@@ -88,7 +89,8 @@
     <Compile Include="src\network\entity\networkmessages\ServerConnectedClientsSync.cs" />
     <Compile Include="src\network\entity\networkmessages\ServerCompletedSync.cs" />
     <Compile Include="src\network\entity\networkmessages\ClientPeerConnectionUpdate.cs" />
-    <Compile Include="src\common\ObjectBroker.cs" />
+    <Compile Include="src\ObjectBroker.cs" />
+    <Compile Include="src\network\entity\networkmessages\ChatMessage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

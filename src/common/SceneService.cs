@@ -11,29 +11,32 @@ namespace FeudalMP.Common
         public const string NODE_PATH_UI = NODE_PATH_BASE + "/UI";
         public Node BaseScene { get; set; }
         public Node BaseUI { get; set; }
-        public override void _Ready()
+        private SceneTree Tree;
+        public SceneService(SceneTree Tree)
         {
-            BaseScene = GetTree().Root.GetNode(NODE_PATH_SCENE);
-            BaseUI = GetTree().Root.GetNode(NODE_PATH_UI);
+            this.Tree = Tree;
+            BaseScene = Tree.Root.GetNode(NODE_PATH_SCENE);
+            BaseUI = Tree.Root.GetNode(NODE_PATH_UI);
         }
         private void ClearBaseUI()
         {
             BaseUI.Free();
             Node n = new Node();
             n.Name = "UI";
-            GetTree().Root.GetNode(NODE_PATH_BASE).AddChild(n);
-            BaseUI = GetTree().Root.GetNode(NODE_PATH_UI);
+            Tree.Root.GetNode(NODE_PATH_BASE).AddChild(n);
+            BaseUI = Tree.Root.GetNode(NODE_PATH_UI);
         }
         private void ClearBaseScene()
         {
             BaseScene.Free();
             Node n = new Node();
             n.Name = "Scene";
-            GetTree().Root.GetNode(NODE_PATH_BASE).AddChild(n);
-            BaseScene = GetTree().Root.GetNode(NODE_PATH_SCENE);
+            Tree.Root.GetNode(NODE_PATH_BASE).AddChild(n);
+            BaseScene = Tree.Root.GetNode(NODE_PATH_SCENE);
         }
         public void LoadUI(string path)
         {
+            
             CallDeferred(nameof(LoadUIDeferred), System.String.Format("{0}/{1}", PATH_UI, path));
         }
         private void LoadUIDeferred(string path)
@@ -63,7 +66,7 @@ namespace FeudalMP.Common
             PackedScene sceneResource = ResourceLoader.Load(path) as PackedScene;
             Node sceneNodeTree = sceneResource.Instance();
             BaseScene.AddChild(sceneNodeTree);
-            GetTree().CurrentScene = GetNode(NODE_PATH_BASE);
+            Tree.CurrentScene = Tree.Root.GetNode(NODE_PATH_BASE);
         }
     }
 }
