@@ -10,7 +10,6 @@ namespace FeudalMP.Network.Entity.NetworkMessages
 {
     public class ClientPeerConnectionUpdate : AbstractNetworkMessage
     {
-        private NetworkService networkService;
         public ClientRepresentation ClientRepresentation { get; set; }
         public bool Disconnected { get; set; }
 
@@ -33,12 +32,13 @@ namespace FeudalMP.Network.Entity.NetworkMessages
                 if (clientPeerConnectionUpdate.Disconnected)
                 {
                     ClientRepresentation disconnectedPeer = Server.ConnectedClients[peerId];
-                    Server.RemoveClient(peerId);
+                    //disconnect actual peer
+                    Server.ENetInstance.DisconnectPeer(peerId, true);
                     foreach (var peer in Server.ConnectedClients)
                     {
                         if (peer.Key != peerId)
                         {
-                            networkService.toClient(peer.Key, new ClientPeerConnectionUpdate(disconnectedPeer, true));
+                            ObjectBroker.Instance.NetworkService.toClient(peer.Key, new ClientPeerConnectionUpdate(disconnectedPeer, true));
                         }
                     }
                 }

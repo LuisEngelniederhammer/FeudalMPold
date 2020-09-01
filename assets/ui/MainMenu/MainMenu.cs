@@ -3,9 +3,20 @@ using Godot;
 
 public class MainMenu : Control
 {
+    
     public override void _Ready()
     {
         FeudalMP.ObjectBroker.Instance.SceneService.AttachUI("ChatWindow/ChatWindow.tscn");
+
+        //TODO Check how to ~dtor the GameClient smarter
+        //Check if a GameClient is active and remove it
+        if (GetTree().Root.HasNode("FeudalMP/GameClient"))
+        {
+            Node gameClient = GetTree().Root.GetNode("FeudalMP/GameClient");
+            GetTree().Root.GetNode("FeudalMP").RemoveChild(gameClient);
+            //TODO not sure if it's good to hard deallocated this
+            gameClient.Free();
+        }
     }
     public void _on_Play_pressed()
     {

@@ -17,10 +17,13 @@ public class Button : Godot.Button
 
     public void _on_Button_pressed()
     {
-        GameClient gameClient = new GameClient(GetTree(), ipField.Text, Int32.Parse(portField.Text), nameField.Text);
+        PackedScene networkGameClientResource = GD.Load("res://src/network/client/GameClient.tscn") as PackedScene;
+        Node networkGameClientNode = networkGameClientResource.Instance();
+        GetNode(SceneService.NODE_PATH_BASE).AddChild(networkGameClientNode);
     }
 
-    public void _on_Button2_pressed(){
+    public void _on_Button2_pressed()
+    {
         FeudalMP.ObjectBroker.Instance.SceneService.LoadUI("MainMenu/MainMenu.tscn");
     }
 }

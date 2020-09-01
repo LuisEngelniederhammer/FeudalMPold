@@ -24,6 +24,9 @@ namespace FeudalMP.Network.Entity.NetworkMessages
         {
             if (Tree.IsNetworkServer())
             {
+                if(Server.ConnectedClients[peerId].ClientState == ClientState.READY){
+                    return;
+                }
                 Server.ConnectedClients[peerId].ClientState = ClientState.READY;
                 logger.Info("there are " + GD.Str(Server.ConnectedClients.Count) + " connected clients, the will all updated with " + GD.Str(peerId));
                 foreach (var peer in Server.ConnectedClients)

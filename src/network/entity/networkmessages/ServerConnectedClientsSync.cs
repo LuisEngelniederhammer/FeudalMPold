@@ -21,22 +21,22 @@ namespace FeudalMP.Network.Entity.NetworkMessages
 
         public override void Callback(int peerId, AbstractNetworkMessage abstractNetworkMessage)
         {
+            ServerConnetedClientsSync serverConnetedClientsSync = abstractNetworkMessage as ServerConnetedClientsSync;
             if (Tree.IsNetworkServer())
             {
-                ConnectedClients = new Dictionary<int, Vector3>();
+                serverConnetedClientsSync.ConnectedClients = new Dictionary<int, Vector3>();
                 foreach (var entry in Server.ConnectedClients)
                 {
                     if (entry.Key != peerId)
                     {
-                        ConnectedClients.Add(entry.Key, entry.Value.Translation);
+                        serverConnetedClientsSync.ConnectedClients.Add(entry.Key, entry.Value.Translation);
                     }
                 }
-                this.Action = NetworkMessageAction.SERVER_CONNECTED_CLIENTS_SYNC;
-                ObjectBroker.Instance.NetworkService.toClient(peerId, this, TransferModeEnum.Reliable);
+                serverConnetedClientsSync.Action = NetworkMessageAction.SERVER_CONNECTED_CLIENTS_SYNC;
+                ObjectBroker.Instance.NetworkService.toClient(peerId, serverConnetedClientsSync, TransferModeEnum.Reliable);
             }
             else
             {
-                ServerConnetedClientsSync serverConnetedClientsSync = abstractNetworkMessage as ServerConnetedClientsSync;
                 foreach (var entry in serverConnetedClientsSync.ConnectedClients)
                 {
                     if (Tree.Root.GetNode(SceneService.NODE_PATH_SCENE).HasNode(GD.Str(entry.Key)))
@@ -51,7 +51,7 @@ namespace FeudalMP.Network.Entity.NetworkMessages
                     peerRepresentation.Translation = entry.Value;
                     Tree.Root.GetNode(SceneService.NODE_PATH_SCENE).AddChild(peerRepresentation);
                 }
-                ObjectBroker.Instance.NetworkService.toServer(new ServerCompletedSync(),TransferModeEnum.Reliable);
+                ObjectBroker.Instance.NetworkService.toServer(new ServerCompletedSync(), TransferModeEnum.Reliable);
             }
         }
 

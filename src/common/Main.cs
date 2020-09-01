@@ -35,14 +35,7 @@ namespace FeudalMP.Common
 
         private bool isServer()
         {
-            foreach (string cli in OS.GetCmdlineArgs())
-            {
-                if (cli == "--fmp-server")
-                {
-                    return true;
-                }
-            }
-            return false;
+            return ((int)ProjectSettings.GetSetting("feudal_mp/application/server")) == 1;
         }
     }
 }

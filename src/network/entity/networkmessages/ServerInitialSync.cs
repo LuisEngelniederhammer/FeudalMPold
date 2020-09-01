@@ -4,7 +4,6 @@ using FeudalMP.Util;
 using FeudalMP.Common;
 using FeudalMP.Network.Server;
 using Newtonsoft.Json;
-using FeudalMP.Network.Server.Entity;
 
 namespace FeudalMP.Network.Entity.NetworkMessages
 {
@@ -23,19 +22,23 @@ namespace FeudalMP.Network.Entity.NetworkMessages
 
         public override void Callback(int peerId, AbstractNetworkMessage abstractNetworkMessage)
         {
-            ServerInitialSync s = abstractNetworkMessage as ServerInitialSync;
-            Logger log = new Logger(this.GetType().Name);
-            log.Info("new ServerInitialSync package received from server");
-            FeudalMP.ObjectBroker.Instance.SceneService.LoadSceneDeferred("res://assets/scenes/" + s.MapFilePath);
+            if (!Tree.IsNetworkServer())
+            {
+                //Client side code
+                ServerInitialSync s = abstractNetworkMessage as ServerInitialSync;
+                Logger log = new Logger(this.GetType().Name);
+                log.Info("new ServerInitialSync package received from server");
+                FeudalMP.ObjectBroker.Instance.SceneService.LoadSceneDeferred("res://assets/scenes/" + s.MapFilePath);
 
-            FeudalMP.ObjectBroker.Instance.SceneService.AttachUI("ChatWindow/ChatWindow.tscn");
+                FeudalMP.ObjectBroker.Instance.SceneService.AttachUI("ChatWindow/ChatWindow.tscn");
 
-            PackedScene charResource = ResourceLoader.Load("res://assets/scenes/Character/Character.tscn") as PackedScene;
-            Node charNode = charResource.Instance();
-            charNode.Name = GD.Str(Tree.GetNetworkUniqueId());
-            charNode.SetNetworkMaster(Tree.GetNetworkUniqueId());
-            Tree.Root.GetNode(SceneService.NODE_PATH_SCENE).AddChild(charNode);
-            ObjectBroker.Instance.NetworkService.toServer(new ServerConnetedClientsSync());
+                PackedScene charResource = ResourceLoader.Load("res://assets/scenes/Character/Character.tscn") as PackedScene;
+                Node charNode = charResource.Instance();
+                charNode.Name = GD.Str(Tree.GetNetworkUniqueId());
+                charNode.SetNetworkMaster(Tree.GetNetworkUniqueId());
+                Tree.Root.GetNode(SceneService.NODE_PATH_SCENE).AddChild(charNode);
+                ObjectBroker.Instance.NetworkService.toServer(new ServerConnetedClientsSync());
+            }
         }
 
         public override AbstractNetworkMessage Convert(string rawJson)

@@ -11,7 +11,7 @@ namespace FeudalMP.Network.Server
         private Logger LOG;
         private SceneTree Tree;
         private PacketDispatcher dispatcher;
-        private NetworkedMultiplayerENet ENetInstance;
+        public NetworkedMultiplayerENet ENetInstance { get; private set; }
         public System.Collections.Generic.Dictionary<int, ClientRepresentation> ConnectedClients { get; set; }
         public GameServer(SceneTree Tree, int port)
         {

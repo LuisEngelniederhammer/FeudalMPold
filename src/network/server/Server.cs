@@ -8,5 +8,4 @@ public class Server : Node
     {
         new GameServer(GetTree(), (int)ProjectSettings.GetSetting("feudal_mp/server/port"));
     }
-
 }

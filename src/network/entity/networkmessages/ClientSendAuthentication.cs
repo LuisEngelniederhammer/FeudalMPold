@@ -10,7 +10,7 @@ namespace FeudalMP.Network.Entity.NetworkMessages
     public class ClientSendAuthentication : AbstractNetworkMessage
     {
         public System.String SteamID64 { get; set; }
-        public ClientSendAuthentication() : base(NetworkMessageAction.CLIENT_SEND_AUTHENTICATION){ }
+        public ClientSendAuthentication() : base(NetworkMessageAction.CLIENT_SEND_AUTHENTICATION) { }
         //Called by client
         public ClientSendAuthentication(string steamID64) : base(NetworkMessageAction.CLIENT_SEND_AUTHENTICATION)
         {
@@ -25,14 +25,17 @@ namespace FeudalMP.Network.Entity.NetworkMessages
         //Called when received by server
         public override void Callback(int peerId, AbstractNetworkMessage abstractNetworkMessage)
         {
-            ClientSendAuthentication clientSendAuthentication = abstractNetworkMessage as ClientSendAuthentication;
-            //GD.Print(c);
-            Logger LOG = new Logger(this.GetType().Name);
-            LOG.Info(System.String.Format("Adding client {0} with name {1} to client list. Sending map data to client", peerId, clientSendAuthentication.SteamID64));
-            ClientRepresentation newClient = new ClientRepresentation(peerId, new Vector3(), new Vector3());
-            newClient.Name = clientSendAuthentication.SteamID64;
-            Server.AddClient(newClient);
-            ObjectBroker.Instance.NetworkService.toClient(peerId, new ServerInitialSync("DevWorld/DevWorld.scn"), TransferModeEnum.Reliable);
+            if (Tree.IsNetworkServer())
+            {
+                ClientSendAuthentication clientSendAuthentication = abstractNetworkMessage as ClientSendAuthentication;
+                //GD.Print(c);
+                Logger LOG = new Logger(this.GetType().Name);
+                LOG.Info(System.String.Format("Adding client {0} with name {1} to client list. Sending map data to client", peerId, clientSendAuthentication.SteamID64));
+                ClientRepresentation newClient = new ClientRepresentation(peerId, new Vector3(), new Vector3());
+                newClient.Name = clientSendAuthentication.SteamID64;
+                Server.AddClient(newClient);
+                ObjectBroker.Instance.NetworkService.toClient(peerId, new ServerInitialSync("DevWorld/DevWorld.scn"), TransferModeEnum.Reliable);
+            }
         }
 
         public override AbstractNetworkMessage Convert(string rawJson)
