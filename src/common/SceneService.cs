@@ -20,6 +20,7 @@ namespace FeudalMP.Common
         }
         private void ClearBaseUI()
         {
+            clearChildNodes(BaseUI);
             BaseUI.Free();
             Node n = new Node();
             n.Name = "UI";
@@ -28,6 +29,7 @@ namespace FeudalMP.Common
         }
         private void ClearBaseScene()
         {
+            clearChildNodes(BaseScene);
             BaseScene.Free();
             Node n = new Node();
             n.Name = "Scene";
@@ -36,7 +38,7 @@ namespace FeudalMP.Common
         }
         public void LoadUI(string path)
         {
-            
+
             CallDeferred(nameof(LoadUIDeferred), System.String.Format("{0}/{1}", PATH_UI, path));
         }
         private void LoadUIDeferred(string path)
@@ -67,6 +69,22 @@ namespace FeudalMP.Common
             Node sceneNodeTree = sceneResource.Instance();
             BaseScene.AddChild(sceneNodeTree);
             Tree.CurrentScene = Tree.Root.GetNode(NODE_PATH_BASE);
+        }
+
+        private void clearChildNodes(Node n)
+        {
+            foreach (Node childNode in n.GetChildren())
+            {
+                if (childNode.GetChildCount() > 0)
+                {
+                    clearChildNodes(childNode);
+                }
+                else
+                {
+                    GD.Print("SceneService::Deallocate " + childNode.Name);
+                    childNode.Free();
+                }
+            }
         }
     }
 }

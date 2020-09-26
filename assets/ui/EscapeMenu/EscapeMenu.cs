@@ -21,13 +21,9 @@ public class EscapeMenu : Control
     public void _on_MainMenu_pressed()
     {
         ObjectBroker.Instance.NetworkService.toServer(new ClientPeerConnectionUpdate(new ClientRepresentation(GetTree().GetNetworkUniqueId(), new Vector3(), new Vector3()), true), TransferModeEnum.Reliable);
-
-        if (GetTree().NetworkPeer != null)
-        {
-            GetTree().NetworkPeer = null;
-        }
-        FeudalMP.ObjectBroker.Instance.SceneService.LoadUI("MainMenu/MainMenu.tscn");
+        //FeudalMP.ObjectBroker.Instance.SceneService.LoadUI("MainMenu/MainMenu.tscn");
     }
+    
     public void _on_Exit_pressed()
     {
         GetTree().Quit();

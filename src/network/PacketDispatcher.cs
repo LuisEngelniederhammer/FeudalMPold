@@ -8,17 +8,17 @@ using Newtonsoft.Json;
 
 namespace FeudalMP.Network
 {
-    public class PacketDispatcher : Godot.Object
+    public class PacketDispatcher : Godot.Node
     {
         private Dictionary<NetworkMessageAction, AbstractNetworkMessage> CallbackRegister;
         private Logger LOG;
 
-        public PacketDispatcher(SceneTree Tree)
+        public override void _Ready()
         {
             LOG = new Logger(this.GetType().Name + System.Guid.NewGuid().ToString());
             LOG.Info("Setting up node signal connections");
             CallbackRegister = new Dictionary<NetworkMessageAction, AbstractNetworkMessage>();
-            Tree.Multiplayer.Connect("network_peer_packet", this, "receive_network_peer_packet");
+            GetTree().Multiplayer.Connect("network_peer_packet", this, "receive_network_peer_packet");
         }
 
         public void receive_network_peer_packet(int id, byte[] packet)
@@ -48,6 +48,12 @@ namespace FeudalMP.Network
         public void RegisterCallback(NetworkMessageAction action, AbstractNetworkMessage callback)
         {
             CallbackRegister.Add(action, callback);
+        }
+
+        public override void _ExitTree()
+        {
+            //dispatcher.QueueFree();
+            GD.Print("PacketDispatcher@_ExitTree ");
         }
 
     }

@@ -16,8 +16,10 @@ namespace FeudalMP.Network.Client
         public override void _Ready()
         {
             LOG = new Logger(this.GetType().Name);
-            dispatcher = new PacketDispatcher(GetTree());
-            
+            PackedScene dispatcherPackedScene = GD.Load("res://src/network/PacketDispatcher.tscn") as PackedScene;
+            dispatcher = (PacketDispatcher)dispatcherPackedScene.Instance();
+            AddChild(dispatcher);
+
             PlayerName = GetNode<Godot.LineEdit>("/root/FeudalMP/UI/Control/HBoxContainer/CenterContainer/VBoxContainer/name/LineEdit").Text;
             string ip = GetNode<Godot.LineEdit>("/root/FeudalMP/UI/Control/HBoxContainer/CenterContainer/VBoxContainer/ip/LineEdit").Text;
             int port = System.Int32.Parse(GetNode<Godot.LineEdit>("/root/FeudalMP/UI/Control/HBoxContainer/CenterContainer/VBoxContainer/port/LineEdit").Text);
@@ -31,6 +33,7 @@ namespace FeudalMP.Network.Client
             ENetInstance.Connect("connection_succeeded", this, "receive_connection_succeeded");
             ENetInstance.Connect("server_disconnected", this, "receive_server_disconnected");
         }
+
         public void receive_server_disconnected()
         {
             LOG.Warn("Connection to server was lost");
@@ -39,10 +42,12 @@ namespace FeudalMP.Network.Client
             dispatcher = null;
             ObjectBroker.Instance.SceneService.LoadUI("MainMenu/MainMenu.tscn");
         }
+
         public void receive_connection_failed()
         {
             LOG.Warn("Cannot connect to server");
         }
+
         public void receive_connection_succeeded()
         {
             LOG.Info("Successfully connected to server");
@@ -51,6 +56,7 @@ namespace FeudalMP.Network.Client
 
         private void RegisterClientCallbacks()
         {
+            LOG.Info("Registering callbacks for client");
             dispatcher.RegisterCallback(NetworkMessageAction.SERVER_INITIAL_SYNC, new ServerInitialSync(GetTree(), null));
             dispatcher.RegisterCallback(NetworkMessageAction.SERVER_CONNECTED_CLIENTS_SYNC, new ServerConnetedClientsSync(GetTree(), null));
             dispatcher.RegisterCallback(NetworkMessageAction.CLIENT_PEER_CONNECTION_UPDATE, new ClientPeerConnectionUpdate(GetTree(), null));
@@ -58,8 +64,10 @@ namespace FeudalMP.Network.Client
             dispatcher.RegisterCallback(NetworkMessageAction.CHAT_MESSAGE, new ChatMessage(GetTree(), null));
         }
 
-        public override void _ExitTree(){
-            dispatcher = null;
+        public override void _ExitTree()
+        {
+            //dispatcher.QueueFree();
+            GD.Print("GameClient@_ExitTree ");
         }
     }
 }
