@@ -26,7 +26,10 @@ public class MainMenu : Control
 
     public void _on_Start_Server_pressed()
     {
-        new GameServer(GetTree(), (int)ProjectSettings.GetSetting("feudal_mp/server/port"));
+        PackedScene gameServerPackedScene = GD.Load("res://src/network/server/GameServer.tscn") as PackedScene;
+        GameServer gameServer = (GameServer)gameServerPackedScene.Instance();
+        AddChild(gameServer);
+        //new GameServer(GetTree(), (int)ProjectSettings.GetSetting("feudal_mp/server/port"));
     }
 
     public void _on_Connect_pressed()

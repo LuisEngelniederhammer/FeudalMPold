@@ -1,5 +1,7 @@
 using Godot;
 using FeudalMP.Util;
+using System.Linq;
+using FeudalMP.Network.Server;
 
 namespace FeudalMP.Common
 {
@@ -15,7 +17,9 @@ namespace FeudalMP.Common
 
             if (isServer())
             {
-                GetTree().ChangeScene("res://src/network/server/Server.tscn");
+                PackedScene gameServerPackedScene = GD.Load("res://src/network/server/GameServer.tscn") as PackedScene;
+                GameServer gameServer = (GameServer)gameServerPackedScene.Instance();
+                AddChild(gameServer);
             }
             else
             {
@@ -35,7 +39,7 @@ namespace FeudalMP.Common
 
         private bool isServer()
         {
-            return ((int)ProjectSettings.GetSetting("feudal_mp/application/server")) == 1;
+            return (((int)ProjectSettings.GetSetting("feudal_mp/application/server")) == 1) || (OS.GetCmdlineArgs().Contains("--fmp-server"));
         }
     }
 }

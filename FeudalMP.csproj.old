@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C8D70D2D-4050-4739-ADCB-A5924ACD3FCC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <OutputPath>.mono/temp/bin/$(Configuration)</OutputPath>
+    <RootNamespace>FeudalMP</RootNamespace>
+    <AssemblyName>FeudalMP</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <GodotProjectGeneratorVersion>1.0.0.0</GodotProjectGeneratorVersion>
+    <BaseIntermediateOutputPath>.mono/temp/obj</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)/$(Configuration)</IntermediateOutputPath>
+    <ApiConfiguration Condition=" '$(Configuration)' != 'ExportRelease' ">Debug</ApiConfiguration>
+    <ApiConfiguration Condition=" '$(Configuration)' == 'ExportRelease' ">Release</ApiConfiguration>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ExportDebug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>$(GodotDefineConstants);GODOT;DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ExportRelease|AnyCPU' ">
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>$(GodotDefineConstants);GODOT;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>$(GodotDefineConstants);GODOT;DEBUG;TOOLS;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies">
+      <Version>1.0.0</Version>
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <Reference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </Reference>
+    <Reference Include="GodotSharp">
+      <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="GodotSharpEditor" Condition=" '$(Configuration)' == 'Debug' ">
+      <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharpEditor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="assets\hud\DebugHUD\DebugHUD.cs" />
+    <Compile Include="assets\hud\DebugHUD\SDLC_State.cs" />
+    <Compile Include="assets\predef\BillboardText.cs" />
+    <Compile Include="assets\predef\MenuHeader.cs" />
+    <Compile Include="assets\ui\ChatWindow\ChatWindow.cs" />
+    <Compile Include="assets\ui\DirectConnect\Button.cs" />
+    <Compile Include="assets\ui\EscapeMenu\EscapeMenu.cs" />
+    <Compile Include="assets\ui\MainMenu\MainMenu.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\common\Main.cs" />
+    <Compile Include="src\common\SceneService.cs" />
+    <Compile Include="src\network\entity\networkmessages\ClientAnimationStateUpdate.cs" />
+    <Compile Include="src\network\entity\networkmessages\ClientPositionUpdate.cs" />
+    <Compile Include="src\network\entity\networkmessages\ClientSendAuthentication.cs" />
+    <Compile Include="src\network\entity\networkmessages\ServerInitialSync.cs" />
+    <Compile Include="src\util\Logger.cs" />
+    <Compile Include="src\network\NetworkService.cs" />
+    <Compile Include="src\network\entity\NetworkMessage.cs" />
+    <Compile Include="src\network\entity\NetworkMessageAction.cs" />
+    <Compile Include="src\network\client\GameClient.cs" />
+    <Compile Include="src\network\PacketDispatcher.cs" />
+    <Compile Include="src\network\server\GameServer.cs" />
+    <Compile Include="src\network\server\Server.cs" />
+    <Compile Include="assets\scenes\Character\Character.cs" />
+    <Compile Include="src\network\server\entity\ClientRepresentation.cs" />
+    <Compile Include="src\network\entity\networkmessages\GenericNetworkMessage.cs" />
+    <Compile Include="src\network\entity\networkmessages\ServerConnectedClientsSync.cs" />
+    <Compile Include="src\network\entity\networkmessages\ServerCompletedSync.cs" />
+    <Compile Include="src\network\entity\networkmessages\ClientPeerConnectionUpdate.cs" />
+    <Compile Include="src\ObjectBroker.cs" />
+    <Compile Include="src\network\entity\networkmessages\ChatMessage.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
